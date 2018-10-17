@@ -13,30 +13,57 @@
 
   </head>
 
+  <header>
+    <% include ./partials/nav %>
+  </header>
+
   <body>
 
-    <header>
-      <% include ./partials/nav %>
-    </header>
     <!-- Page-specific (main) content here -->
-    <main class="container">
+    <main class="event_container">
 
-      <section class="new-tweet">
-        <h2>Schedule plans!</h2>
-        <form id="submit" action="/tweets/" method="POST">
-          <input id="event_title" type="text" name="event_title" placeholder="What is the title of your event?">
-          <div class="error-message" hidden></div>
-          <input type="submit" value="Submit">
-        </form>
+      <section class="link">
+        <p>This is the shareable link</p>
+      </section>
+
+      <section class="table">
+
+        <table>
+          <thead>
+              <tr>
+                  <th colspan="2">Schedule</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td></td>
+                <td class="date">Oct 18, 2018</td>
+              </tr>
+              <tr>
+                <td>2 participants</td>
+                <td>1 Yes, 1 No</td>
+              </tr>
+              <tr>
+                <td>John Smith</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Jon Jones</td>
+                <td>No</td>
+              </tr>
+          </tbody>
+
+        </table>
+
       </section>
 
     </main>
 
-    <footer>
-      <% include ./partials/footer %>
-    </footer>
-
   </body>
+
+  <footer>
+    <% include ./partials/footer %>
+  </footer>
 
 </html>
 
