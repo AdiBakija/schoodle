@@ -12,11 +12,31 @@
     <script type="text/javascript" src="/scripts/app.js"></script>
 
   </head>
-  <header>
-    <% include ./partials/nav %>
-  </header>
 
   <body>
-    <h1>Hello World!</h1>
+
+    <header>
+      <% include ./partials/nav %>
+    </header>
+    <!-- Page-specific (main) content here -->
+    <main class="container">
+
+      <section class="new-tweet">
+        <h2>Schedule plans!</h2>
+        <form id="submit" action="/tweets/" method="POST">
+          <input id="event_title" type="text" name="event_title" placeholder="What is the title of your event?">
+          <div class="error-message" hidden></div>
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+
+    </main>
+
+    <footer>
+      <% include ./partials/footer %>
+    </footer>
+
   </body>
+
 </html>
+

@@ -19,16 +19,48 @@
       <% include ./partials/nav %>
     </header>
     <!-- Page-specific (main) content here -->
-    <main class="container">
+    <main class="event_container">
 
-      <section class="new-tweet">
-        <h2>Schedule plans!</h2>
-        <form id="submit" action="/tweets/" method="POST">
-          <input id="event_title" type="text" name="event_title" placeholder="What is the title of your event?">
+      <section class="event">
+        <form id="event_title">
+          <h2>Schedule plans!</h2>
+          <input id="event-title" type="text" name="event-title" placeholder="What is the title of your event?">
           <div class="error-message" hidden></div>
           <input type="submit" value="Submit">
         </form>
       </section>
+
+      <section class="event">
+        <form id="event_info">
+          <h2>Schedule plans!</h2>
+          <input id="event-desc" type="text" name="event-desc" placeholder="Descibe your event.">
+          <input id="event-loc" type="text" name="event-loc" placeholder="Where will the event take place.">
+          <div class="error-message" hidden></div>
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+
+      <section class="event">
+        <form id="event_date">
+          <h2>Schedule plans!</h2>
+          <input id="event-date1" type="text" name="event-date1" placeholder="First date.">
+          <input id="event-date2" type="text" name="event-date2" placeholder="Second date.">
+          <div class="error-message" hidden></div>
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+
+      <section class="event">
+        <form id="event_creator">
+          <h2>Schedule plans!</h2>
+          <input id="event-creator-name" type="text" name="event-creator-name" placeholder="Creators name.">
+          <input id="event-creator-email" type="text" name="event-creator-email" placeholder="Creators email.">
+          <div class="error-message" hidden></div>
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+
+
 
     </main>
 
