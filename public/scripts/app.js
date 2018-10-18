@@ -21,30 +21,26 @@ Submit button:
 */
 $(document).ready(function(){
   //get the initial page with '/'
-  var $event_container = $('#event');
-  var $event_title = $('#event_title');
-  var $event_info = $('#event_info');
-  var $event_date = $('#event_date');
-  var $event_creator = $('#event_creator');
-  var $event_info_html = $(document).find('#event_info').clone();
-  var $event_date_html = $(document).find('#event_date').clone();
-  var $event_creator_html = $(document).find('#event_creator').clone();
-  var event_title_user_input=1;
-  var event_info_user_input_desc=2;
-  var event_info_user_input_loc=3;
-  var event_date_user_input1=4;
-  var event_date_user_input2=5;
-  var event_creator_name=6;
-  var event_creator_email=7;
+  var $event_container = $('.ol-lg-12 col-md-6 col-sm-6 col-xs-1 bg-warning');
+  var $event_title = $('.event_title');
+  var $event_info = $('.event_info');
+  var $event_date = $('.event_date');
+  var $event_creator = $('.event_creator');
+  var event_title_user_input;
+  var event_info_user_input_desc;
+  var event_info_user_input_loc;
+  var event_date_user_input1;
+  var event_date_user_input2;
+  var event_creator_name;
+  var event_creator_email;
 
 
 // submit event title
   $event_title.on('submit',function(event){
     event.preventDefault();
     //take the request input and send a response
-    event_title_user_input = $('#textarea').val();                      ///////change the name according to Adi's id of index form textarea
+    event_title_user_input = $('.event-title').val();                      ///////change the name according to Adi's id of index form textarea
     let user_input_length = event_title_user_input.length;
-    console.log(event_title_user_input);
     //check input
     if(user_input_length==0){alert('Empty Event name input!')}
     //send response with user input as data
@@ -54,29 +50,33 @@ $(document).ready(function(){
       url:'/api/users/new',
       type:'post'
     }).done(function(){
-      //put data into cookie to carry on to next page
-      console.log(event_title_user_input);
-      $event_container.empty();
-      $event_container.append($event_info_html);
+      $event_title.css('display','none');
+      $event_info.css('display','block');
+
+
     })
   });
 
 
+  // $("article.row").on("submit", "form.timeslot", (e) => {
+  //   e.preventDefault()
+  // })
+
+  // $("article.row").on("submit", "form.event", (e) => {
+  //   e.preventDefault()
+  // })
+
 // submit event info
   $event_info.on('submit',function(event){
     event.preventDefault();
-    event_info_user_input_desc = $('#event-desc').val();
-    event_info_user_input_loc = $('#event-loc').val();
-    //Add check for no input
-
+    event_info_user_input_desc = $(event.target).find('.event-desc').val();
+    event_info_user_input_loc = $(event.target).find('.event-loc').val();
     $.ajax({
       url:'/api/users/new/event',
       type:'post'
     }).done(function(data,status,response){
-      $event_container.empty();
-      $event_container.append($event_date_html);
-      console.log(event_info_user_input_desc);
-      console.log(event_info_user_input_loc);
+      $event_info.css('display','none');
+      $event_date.css('display','block');
     })
   })
 
@@ -84,21 +84,21 @@ $(document).ready(function(){
 //submit event date
 $event_date.on('submit',function(event){
   event.preventDefault();
-  event_date_user_input1 = $('#event-date1').val();
-  event_date_user_input2 = $('#event-date2').val();
+  event_date_user_input1 = $(event.target).find('.event-date1').val();
+  event_date_user_input2 = $(event.target).find('.event-date2').val();
   $.ajax({
     url:'/api/users/new/date',
     type:'post'
   }).done(function(data,status,response){
-    $event_container.empty();
-    $event_container.append($event_creator_html);
+    $event_date.css('display','none');
+    $event_creator.css('display','block');
   })
 })
 
 $event_creator.on('submit',function(){
   event.preventDefault();
-  event_creator_name = $('#event-creator-name').val();
-  event_creator_email = $('#event-creator-email').val();
+  event_creator_name = $(event.target).find('.event-creator-name').val();
+  event_creator_email = $(event.target).find('.event-creator-email').val();
   $.ajax({
     url:'api/users/new/creator',
     type:'post',
