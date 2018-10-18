@@ -2,41 +2,41 @@ exports.seed = function(knex, Promise) {
   return knex('usersdates').del()
     .then(function () {
       return Promise.all([
-        knex('usersdates').insert({id: 1, userid: 1, dateid: 1, available: 1}),
-        knex('usersdates').insert({id: 2, userid: 1, dateid: 2, available: 1}),
-        knex('usersdates').insert({id: 3, userid: 1, dateid: 3, available: 0}),
+        knex('usersdates').insert({id: 1000, userid: 1000, dateid: 1000, available: 1}),
+        knex('usersdates').insert({id: 2000, userid: 1000, dateid: 2000, available: 1}),
+        knex('usersdates').insert({id: 3000, userid: 1000, dateid: 3000, available: 0}),
 
-        knex('usersdates').insert({id: 4, userid: 2, dateid: 1, available: 1}),
-        knex('usersdates').insert({id: 5, userid: 2, dateid: 2, available: 0}),
-        knex('usersdates').insert({id: 6, userid: 2, dateid: 3, available: 1}),
+        knex('usersdates').insert({id: 4000, userid: 2000, dateid: 1000, available: 1}),
+        knex('usersdates').insert({id: 5000, userid: 2000, dateid: 2000, available: 0}),
+        knex('usersdates').insert({id: 6000, userid: 2000, dateid: 3000, available: 1}),
 
-        knex('usersdates').insert({id: 7, userid: 3, dateid: 1, available: 1}),
-        knex('usersdates').insert({id: 8, userid: 3, dateid: 2, available: 1}),
-        knex('usersdates').insert({id: 9, userid: 3, dateid: 3, available: 0}),
+        knex('usersdates').insert({id: 7000, userid: 3000, dateid: 1000, available: 1}),
+        knex('usersdates').insert({id: 8000, userid: 3000, dateid: 2000, available: 1}),
+        knex('usersdates').insert({id: 9000, userid: 3000, dateid: 3000, available: 0}),
 
-        knex('usersdates').insert({id: 10, userid: 4, dateid: 4, available: 1}),
-        knex('usersdates').insert({id: 11, userid: 4, dateid: 5, available: 1}),
-        knex('usersdates').insert({id: 12, userid: 4, dateid: 6, available: 0}),
+        knex('usersdates').insert({id: 10000, userid: 4000, dateid: 4000, available: 1}),
+        knex('usersdates').insert({id: 11000, userid: 4000, dateid: 5000, available: 1}),
+        knex('usersdates').insert({id: 12000, userid: 4000, dateid: 6000, available: 0}),
 
-        knex('usersdates').insert({id: 13, userid: 5, dateid: 4, available: 1}),
-        knex('usersdates').insert({id: 14, userid: 5, dateid: 5, available: 1}),
-        knex('usersdates').insert({id: 15, userid: 5, dateid: 6, available: 0}),
+        knex('usersdates').insert({id: 13000, userid: 5000, dateid: 4000, available: 1}),
+        knex('usersdates').insert({id: 14000, userid: 5000, dateid: 5000, available: 1}),
+        knex('usersdates').insert({id: 15000, userid: 5000, dateid: 6000, available: 0}),
 
-        knex('usersdates').insert({id: 16, userid: 6, dateid: 4, available: 1}),
-        knex('usersdates').insert({id: 17, userid: 6, dateid: 5, available: 0}),
-        knex('usersdates').insert({id: 18, userid: 6, dateid: 6, available: 0}),
+        knex('usersdates').insert({id: 16000, userid: 6000, dateid: 4000, available: 1}),
+        knex('usersdates').insert({id: 17000, userid: 6000, dateid: 5000, available: 0}),
+        knex('usersdates').insert({id: 18000, userid: 6000, dateid: 6000, available: 0}),
 
-        knex('usersdates').insert({id: 19, userid: 7, dateid: 7, available: 1}),
-        knex('usersdates').insert({id: 20, userid: 7, dateid: 8, available: 0}),
-        knex('usersdates').insert({id: 21, userid: 7, dateid: 9, available: 1}),
+        knex('usersdates').insert({id: 19000, userid: 7000, dateid: 7000, available: 1}),
+        knex('usersdates').insert({id: 20000, userid: 7000, dateid: 8000, available: 0}),
+        knex('usersdates').insert({id: 21000, userid: 7000, dateid: 9000, available: 1}),
 
-        knex('usersdates').insert({id: 22, userid: 8, dateid: 7, available: 0}),
-        knex('usersdates').insert({id: 23, userid: 8, dateid: 8, available: 1}),
-        knex('usersdates').insert({id: 24, userid: 8, dateid: 9, available: 1}),
+        knex('usersdates').insert({id: 22000, userid: 8000, dateid: 7000, available: 0}),
+        knex('usersdates').insert({id: 23000, userid: 8000, dateid: 8000, available: 1}),
+        knex('usersdates').insert({id: 24000, userid: 8000, dateid: 9000, available: 1}),
 
-        knex('usersdates').insert({id: 25, userid: 9, dateid: 7, available: 0}),
-        knex('usersdates').insert({id: 26, userid: 9, dateid: 8, available: 0}),
-        knex('usersdates').insert({id: 27, userid: 9, dateid: 9, available: 1}),
+        knex('usersdates').insert({id: 25000, userid: 9000, dateid: 7000, available: 0}),
+        knex('usersdates').insert({id: 26000, userid: 9000, dateid: 8000, available: 0}),
+        knex('usersdates').insert({id: 27000, userid: 9000, dateid: 9000, available: 1}),
 
       ]);
     });

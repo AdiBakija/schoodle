@@ -67,7 +67,7 @@ dataHelpers.addEmail(eventObj, function (err, result) {
       console.log(err)
     }
     dataHelpers.addDates(eventObj, result2, function(err, result3) {
-      console.log(result3)
+      console.log("It Got Here", result3)
     })
   })
 

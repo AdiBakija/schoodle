@@ -106,18 +106,19 @@ module.exports = function makeDataHelpers(knex) {
 
     addDates: function(eventObj, eventId, callback) {
       let datesArray = []
-      for (var date in eventObj.event_dates_user_input) {
+      for (var date of eventObj.event_dates_user_input) {
         let dateInsert = knex('dates').insert({
             eventid: eventId,
             datetime: date.startDateTime,
             enddatetime: date.endDateTime
+          }).then(id=> {
+            console.log('One item added')
           })
         datesArray.push(dateInsert)
       }
-      callback(null, datesArray)
+      let inserted = Promise.all(datesArray)
+      callback(null, inserted)
     }
-
-
 
 
 //   data:{event_title_user_input:event_title_user_input,
