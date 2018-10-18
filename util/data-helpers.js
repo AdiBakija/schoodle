@@ -68,12 +68,65 @@ module.exports = function makeDataHelpers(knex) {
         })
     },
 
-    promisified: function (somestring) {
-      var future = new Promise
+    addEmail: function(eventObj, callback) {
+        knex.select('id').from('emails')
+          .where('emailtext','=',eventObj.event_creator_email)
+          .then((rows)=> {
+              if(rows.length > 0) {
+                callback(null, rows[0].id)
+              } else {
+                knex('emails')
+                  .returning('id')
+                  .insert({
+                  name: eventObj.event_creator_name,
+                  emailtext: eventObj.event_creator_email
+                }).then(function(insertedRows) {
+                  callback(null, insertedRows[0])
+                })
+              }
+          })
+    },
+
+    addEvent: function(eventObj, emailId, callback) {
+      knex('events')
+        .returning('id')
+        .insert({
+                url: eventObj.url,
+                title: eventObj.event_title_user_input,
+                description: eventObj.event_info_user_input_desc,
+                location: eventObj.event_info_user_input_loc,
+                closed: 0,
+                finaldateid: null,
+                creatoremailid: emailId
+        })
+        .then(function(eventid) {
+          callback(null, eventid[0])
+        })
+    },
+
+    addDates: function(eventObj, eventId, callback) {
+      let datesArray = []
+      for (var date in eventObj.event_dates_user_input) {
+        let dateInsert = knex('dates').insert({
+            eventid: eventId,
+            datetime: date.startDateTime,
+            enddatetime: date.endDateTime
+          })
+        datesArray.push(dateInsert)
+      }
+      callback(null, datesArray)
     }
 
 
 
+
+//   data:{event_title_user_input:event_title_user_input,
+//      event_info_user_input_desc:event_info_user_input_desc,
+//      event_info_user_input_loc:event_info_user_input_loc,
+//      event_dates_user_input:[{startDateTime:'2020/01/01 13:00', endDateTime:end}, {startDateTime:'2020/01/01 13:00', endDateTime:end}, {startDateTime:'2020/01/01 13:00', endDateTime:end}],
+//      event_creator_name:event_creator_name,
+//      event_creator_email:event_creator_email}
+//
   }
 }
 
