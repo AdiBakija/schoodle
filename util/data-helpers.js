@@ -25,7 +25,7 @@ module.exports = function makeDataHelpers(knex) {
         })
     },
     getDates: function (eventid, callback){
-      knex.select('datetime', 'enddatetime').from('dates')
+      knex.select('id','datetime', 'enddatetime').from('dates')
         .where('eventid', '=', eventid)
         .orderBy('id')
         .asCallback(function(err, rows) {
