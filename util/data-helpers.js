@@ -104,30 +104,67 @@ module.exports = function makeDataHelpers(knex) {
         })
     },
 
-    addDates: function(eventObj, eventId, callback) {
-      let datesArray = []
+    addDates: async function(eventObj, eventId, callback) {
       for (var date of eventObj.event_dates_user_input) {
-        let dateInsert = knex('dates').insert({
+        let dateInsert = await knex('dates').insert({
             eventid: eventId,
             datetime: date.startDateTime,
             enddatetime: date.endDateTime
           }).then(id=> {
             console.log('One item added')
-          })
-        datesArray.push(dateInsert)
+          });
       }
-      let inserted = Promise.all(datesArray)
-      callback(null, inserted)
+      callback(null, "Success")
+    },
+
+    addUsers: async function(availabilityArray, callback) {
+      for (var user of availabilityArray) {
+          if (user.userid) {
+            let updatedId = await knex('users').returning('id')
+              .where('id', '=', user.userid)
+              .update('name', user.name);
+            console.log(updatedId)
+            console.log(user.dateids)
+            console.log(user.availability)
+            try {
+              for (var i =0; i < user.dateids.length; i++){
+                console.log('User Updated')
+                await knex('usersdates')
+                  .where('userid','=',updatedId[0])
+                  .andWhere('dateid',user.dateids[i])
+                  .update({
+                    available: user.availability[i]
+                  })
+                }
+
+            } catch (e) {
+              console.log(e)
+            }
+          } else {
+            let createdId = await knex('users').returning('id')
+              .insert({
+                name: user.name,
+                eventid: user.eventid
+              });
+            try {
+              console.log('userid Created')
+              for (var i = 0; i < user.dateids.length; i++) {
+                await knex('usersdates').insert({
+                  userid: createdId[0],
+                  dateid: user.dateids[i],
+                  available: user.availability[i]
+                }).then((usersDatesId)=>{
+                  console.log("userDateId Added")
+                })
+              }
+            } catch (e) {
+              console.log(e)
+            }
+        }
+
+      }
     }
 
-
-//   data:{event_title_user_input:event_title_user_input,
-//      event_info_user_input_desc:event_info_user_input_desc,
-//      event_info_user_input_loc:event_info_user_input_loc,
-//      event_dates_user_input:[{startDateTime:'2020/01/01 13:00', endDateTime:end}, {startDateTime:'2020/01/01 13:00', endDateTime:end}, {startDateTime:'2020/01/01 13:00', endDateTime:end}],
-//      event_creator_name:event_creator_name,
-//      event_creator_email:event_creator_email}
-//
   }
 }
 

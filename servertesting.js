@@ -26,12 +26,12 @@ const dataHelpers = require("./util/data-helpers")(knex);
 //  console.log("Returned", result)
 //})
 
-//dataHelpers.getDates('1',(err, result) => {
-//  if (err) {
-//    console.log(err)
-//  }
-//  console.log("Returned", result)
-//})
+dataHelpers.getDates('3000',(err, result) => {
+  if (err) {
+    console.log(err)
+  }
+  console.log("Returned", result)
+})
 
 //var usersFromId = dataHelpers.getUsersFromEventId('1',(err, result) => {
 //  if (err) {
@@ -39,12 +39,12 @@ const dataHelpers = require("./util/data-helpers")(knex);
 //  }
 //  return result
 //})
-//dataHelpers.getUserAvailabilityFromEventId('3',(err, result) => {
-//  if (err) {
-//    console.log(err)
-//  }
-//  console.log("Iterable Array", result)
-//})
+dataHelpers.getUserAvailabilityFromEventId('3000',(err, result) => {
+  if (err) {
+    console.log(err)
+  }
+  console.log("Iterable Array", result)
+})
 
 var eventObj = {
   event_creator_name: 'Mark',
@@ -58,20 +58,32 @@ var eventObj = {
 
 
 
-dataHelpers.addEmail(eventObj, function (err, result) {
-  if (err) {
-    console.log(err)
-  }
-  dataHelpers.addEvent(eventObj, result, function (err, result2) {
-    if (err) {
-      console.log(err)
-    }
-    dataHelpers.addDates(eventObj, result2, function(err, result3) {
-      console.log("It Got Here", result3)
-    })
-  })
+//dataHelpers.addEmail(eventObj, function (err, result) {
+//  if (err) {
+//    console.log(err)
+//  }
+//  dataHelpers.addEvent(eventObj, result, function (err, result2) {
+//    if (err) {
+//      console.log(err)
+//    }
+//    dataHelpers.addDates(eventObj, result2, function(err, result3) {
+//      console.log("It Got Here", result3)
+//    })
+//  })
+//
+//})
 
-})
+var availabiltiyArray = [
+  {userid: 4000, dateids: [4000, 5000, 6000], availability: [1, 1, 1], name: 'Sir Dr. Mr. Professor Spaghetti Esq.', eventid: 2000},
+  {dateids:[4000, 5000, 6000], availability: [0,0,0] ,name: 'N. Person', eventid: 3000}
+]
+
+//dataHelpers.addUsers(availabiltiyArray, function(err, result4) {
+//  if (err) {
+//    console.log(error)
+//  }
+//  console.log(result4)
+//})
 
 
 
