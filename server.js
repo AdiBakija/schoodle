@@ -53,32 +53,32 @@ app.listen(PORT, () => {
 });
 
 
-var eventObj = {
-  event_creator_name: 'Mark',
-  event_creator_email: '123@funny.com',
-  url: 'scoobydoo',
-  event_title_user_input: "Spaghetti Party" ,
-  event_info_user_input_desc: "Good pasta here",
-  event_info_user_input_loc: "123 Fake Street",
-  event_dates_user_input: [{startDateTime: '2020/04/20 16:20', endDateTime: '2020/04/20 16:40'}, {startDateTime: '2020/04/20 4:20', endDateTime: '2020/04/20 4:45'}]
-  }
+// var eventObj = {
+//   event_creator_name: 'Mark',
+//   event_creator_email: '123@funny.com',
+//   url: 'scoobydoo',
+//   event_title_user_input: "Spaghetti Party" ,
+//   event_info_user_input_desc: "Good pasta here",
+//   event_info_user_input_loc: "123 Fake Street",
+//   event_dates_user_input: [{startDateTime: '2020/04/20 16:20', endDateTime: '2020/04/20 16:40'}, {startDateTime: '2020/04/20 4:20', endDateTime: '2020/04/20 4:45'}]
+//   }
 
 
 
-dataHelpers.addEmail(eventObj, function (err, result) {
-  if (err) {
-    console.log(err)
-  }
-  dataHelpers.addEvent(eventObj, result, function (err, result2) {
-    if (err) {
-      console.log(err)
-    }
-    dataHelpers.addDates(eventObj, result2, function(err, result3) {
-      console.log("It Got Here", result3)
-    })
-  })
+// dataHelpers.addEmail(eventObj, function (err, result) {
+//   if (err) {
+//     console.log(err)
+//   }
+//   dataHelpers.addEvent(eventObj, result, function (err, result2) {
+//     if (err) {
+//       console.log(err)
+//     }
+//     dataHelpers.addDates(eventObj, result2, function(err, result3) {
+//       console.log("It Got Here", result3)
+//     })
+//   })
 
-})
+// })
 
 
 
