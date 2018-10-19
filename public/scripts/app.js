@@ -35,6 +35,7 @@ $(document).ready(function(){
   var event_creator_email;
 
 
+
 // submit event title
   $event_title.on('submit',function(event){
     event.preventDefault();
@@ -105,10 +106,15 @@ $event_creator.on('submit',function(){
     data:{event_title_user_input:event_title_user_input,
       event_info_user_input_desc:event_info_user_input_desc,
       event_info_user_input_loc:event_info_user_input_loc,
-      event_date_user_input1:event_date_user_input1,
-      event_date_user_input2:event_date_user_input2,
+      event_dates_user_input:[{startDateTime:event_date_user_input1, endDateTime:event_date_user_input2}],
       event_creator_name:event_creator_name,
       event_creator_email:event_creator_email}
+  }).done(function(data,status,response){
+    //got response from server
+    //send get request to /api/users/shorturl
+    // here data = shorturl
+    window.location = 'api/users/new/'+data;
+
   })
 })
 //send everything to server side, store into database, create shorurl, redirect to shorturl,
