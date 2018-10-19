@@ -26,6 +26,7 @@ const dataHelpers = require("./util/data-helpers")(knex);
 //  console.log("Returned", result)
 //})
 
+
 //dataHelpers.getDates('1',(err, result) => {
 //  if (err) {
 //    console.log(err)
@@ -73,7 +74,9 @@ dataHelpers.addEmail(eventObj, function (err, result) {
 
 })
 
+async function(){
 
+}
 
 
 
