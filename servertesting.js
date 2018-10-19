@@ -108,9 +108,6 @@ var availabiltiyArray = [
 //  console.log(result4)
 //})
 
-async function(){
-
-}
 
 
 
