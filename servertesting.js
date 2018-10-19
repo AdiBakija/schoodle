@@ -74,10 +74,6 @@ dataHelpers.addEmail(eventObj, function (err, result) {
 
 })
 
-async function(){
-
-}
-
 
 
 

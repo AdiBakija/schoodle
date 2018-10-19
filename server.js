@@ -16,7 +16,7 @@ const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
 const dataHelpers = require("./util/data-helpers")(knex);
-const usersRoutes = require("./routes/users");
+const usersRoutes = require("./routes/users")(dataHelpers);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -38,7 +38,7 @@ app.use(express.static("public"));
 
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex, app));
+app.use("/api/users", usersRoutes);
 
 
 // Home page
@@ -65,20 +65,20 @@ var eventObj = {
 
 
 
-dataHelpers.addEmail(eventObj, function (err, result) {
-  if (err) {
-    console.log(err)
-  }
-  dataHelpers.addEvent(eventObj, result, function (err, result2) {
-    if (err) {
-      console.log(err)
-    }
-    dataHelpers.addDates(eventObj, result2, function(err, result3) {
-      console.log("It Got Here", result3)
-    })
-  })
+// dataHelpers.addEmail(eventObj, function (err, result) {
+//   if (err) {
+//     console.log(err)
+//   }
+//   dataHelpers.addEvent(eventObj, result, function (err, result2) {
+//     if (err) {
+//       console.log(err)
+//     }
+//     dataHelpers.addDates(eventObj, result2, function(err, result3) {
+//       console.log("It Got Here", result3)
+//     })
+//   })
 
-})
+// })
 
 
 
