@@ -12,6 +12,18 @@ module.exports = function makeDataHelpers(knex) {
           callback(err, rows)
         })
     },
+    getAllFromEventId: function (eventid, callback){
+      knex.select('title', 'description', 'location','emails.name')
+        .from('events')
+        .innerJoin('emails','events.creatoremailid', 'emails.id')
+        .where('events.id', '=', eventid)
+        .asCallback(function(err, rows) {
+          if (err) {
+            return console.log(err);
+          }
+          callback(err, rows)
+        })
+    },
     getDates: function (eventid, callback){
       knex.select('datetime', 'enddatetime').from('dates')
         .where('eventid', '=', eventid)

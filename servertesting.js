@@ -19,20 +19,46 @@ const usersRoutes = require("./routes/users");
 
 const dataHelpers = require("./util/data-helpers")(knex);
 
-//dataHelpers.getEventId('1234567',(err, result) => {
-//  if (err) {
-//    console.log(err)
-//  }
-//  console.log("Returned", result)
-//})
+var url = '1234567'
 
-
-dataHelpers.getDates('3000',(err, result) => {
+dataHelpers.getEventId(url, (err, eventIdResult) => {
   if (err) {
     console.log(err)
   }
-  console.log("Returned", result)
+  var returnObject = {}
+  var eventid = eventIdResult[0].id
+  returnObject.eventid = eventIdResult[0].id
+
+  dataHelpers.getAllFromEventId(eventid, function(err, eventInfoResult) {
+    if (err) {
+      console.log(err)
+    }
+    returnObject.title = eventInfoResult[0].title
+    returnObject.description = eventInfoResult[0].description
+    returnObject.location = eventInfoResult[0].location
+    returnObject.creatorname = eventInfoResult[0].name
+
+    dataHelpers.getDates(eventid, (err, datesResult) => {
+      if (err) {
+        console.log(err)
+      }
+      returnObject.dates = datesResult
+
+      dataHelpers.getUserAvailabilityFromEventId(eventid,(err, availabilityResult) => {
+        if (err) {
+          console.log(err)
+        }
+
+        returnObject.availableArray = availabilityResult
+        console.log("Return Object", returnObject)
+
+        return returnObject
+      })
+    })
+  })
 })
+
+
 
 
 //var usersFromId = dataHelpers.getUsersFromEventId('1',(err, result) => {
@@ -41,12 +67,7 @@ dataHelpers.getDates('3000',(err, result) => {
 //  }
 //  return result
 //})
-dataHelpers.getUserAvailabilityFromEventId('3000',(err, result) => {
-  if (err) {
-    console.log(err)
-  }
-  console.log("Iterable Array", result)
-})
+
 
 var eventObj = {
   event_creator_name: 'Mark',
