@@ -26,12 +26,14 @@ const dataHelpers = require("./util/data-helpers")(knex);
 //  console.log("Returned", result)
 //})
 
+
 dataHelpers.getDates('3000',(err, result) => {
   if (err) {
     console.log(err)
   }
   console.log("Returned", result)
 })
+
 
 //var usersFromId = dataHelpers.getUsersFromEventId('1',(err, result) => {
 //  if (err) {
@@ -85,7 +87,9 @@ var availabiltiyArray = [
 //  console.log(result4)
 //})
 
+async function(){
 
+}
 
 
 
