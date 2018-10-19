@@ -35,6 +35,7 @@
 
     <!-- Page-specific (main) content here -->
     <main class="event_container">
+      <div class="shadow p-3 mb-5">
 
       <section class="link">
         <p>This is the shareable link</p>
@@ -43,40 +44,58 @@
       <section class="poll-table">
 
         <table class="table">
-          <thead>
-              <tr>
-                  <th colspan="2">Schedule</th>
-              </tr>
-          </thead>
           <tbody>
-              <tr>
-                <td></td>
-                <td class="date">
-                  <table>
-                    <tr>
-                      <td> October 18, 2018 </td>
-                      <td> October 19, 2018 </td>
-                    </tr>
-                  </table>
+            <tr>
+              <td>Participants</td>
+              <td> October 21, 2018 </td>
+              <td> October 22, 2018 </td>
+            </tr>
+            <tr>
+              <div class="add_participant_poll">
+                <td>
+                  <form class="add_participant">
+                    <div class="form-group">
+                      <input type="text" class="participant-name form-control" name="participant-name" placeholder="Name">
+                    </div>
+                  </form>
                 </td>
-              </tr>
-              <tr>
-                <td>2 participants</td>
-                <td>1 Yes, 1 No</td>
-              </tr>
-              <tr>
-                <td class="name">John Smith</td>
-                <td>Yes</td>
-              </tr>
-              <tr>
-                <td class="name">Jon Jones</td>
-                <td>No</td>
-              </tr>
+                <td>
+                  <form class="add_poll">
+                    <div class="form-group">
+                      <input type="text" class="yes-no form-control" name="participant-name" placeholder="Y/N">
+                    </div>
+                  </form>
+                </td>
+                <td>
+                  <form class="add_poll">
+                    <div class="form-group">
+                      <input type="text" class="yes-no form-control" name="participant-name" placeholder="Y/N">
+                    </div>
+                  </form>
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <td class="name">John Smith</td>
+              <td>Yes</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td class="name">Jon Jones</td>
+              <td>No</td>
+              <td>Yes</td>
+            </tr>
           </tbody>
-
         </table>
 
+        <form class="submit_finish">
+          <div class="error-message" hidden></div>
+          <button class="submit btn btn-success" type="submit">Submit</button>
+          <button class="finish btn btn-success" type="submit">Finish</button>
+        </form>
+
       </section>
+    </div>
 
     </main>
 

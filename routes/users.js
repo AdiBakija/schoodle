@@ -1,5 +1,6 @@
 "use strict";
 
+
 const express = require('express');
 const router  = express.Router();
 
@@ -21,16 +22,26 @@ module.exports = (dataHelpers) => {
 });
  // /api/user/new/creator
 router.post('/new/creator',(req,res)=>{
-  //  var event_title = req.body.event_title_user_input;
-  // var event_desc = req.body.event_info_user_input_desc;
-  // var event_loc = req.body.event_info_user_input_loc;
-  // var event_date_array = req.body.event_dates_user_input;
-  // var event_creator_name = req.body.event_creator_name;
-  // var event_creator_email = req.body.event_creator_email;
+
   let shorturl = generateRandomShortUrl();
 
   //use helper function to store into database
+  let eventObj=req.body;
 
+dataHelpers.addEmail(eventObj, function (err, result) {
+  if (err) {
+    console.log(err)
+  }
+  dataHelpers.addEvent(eventObj, result, function (err, result2) {
+    if (err) {
+      console.log(err)
+    }
+    dataHelpers.addDates(eventObj, result2, function(err, result3) {
+      console.log("It Got Here", result3)
+    })
+  })
+
+})
 
 
 
