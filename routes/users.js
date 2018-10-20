@@ -74,9 +74,21 @@ router.put('/loadEvent', (req,res)=> {
       res.status(500).json({ error: err.message });
     } else {
       console.log("EVENT", event)
-      res.send(event)
+      res.send(event);
     }
   })
+})
+
+router.post('/loadEvent', (req,res)=> {
+  console.log("avArray", req.body.avArray)
+
+  dataHelpers.addUsers(req.body.avArray, function(err, result4) {
+    if (err) {
+      console.log(error)
+    }
+    res.status(201).send(result4)
+  })
+
 })
 
 function generateRandomShortUrl(){
