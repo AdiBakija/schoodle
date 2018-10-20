@@ -55,7 +55,6 @@ app.listen(PORT, () => {
 });
 
 
-
 // dataHelpers.addEmail(eventObj, function (err, result) {
 //   if (err) {
 //     console.log(err)

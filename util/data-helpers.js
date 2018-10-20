@@ -66,6 +66,7 @@ module.exports = function makeDataHelpers(knex) {
               //if we would prefer an array, we could order the query better and make userObj userArray
               for (var user of rows2) {
                 let userArray = []
+                userArray.push(user.userid)
                 userArray.push(user.name)
                 for (var row of rowsFirst) {
                   if (row.userid === user.userid) {
