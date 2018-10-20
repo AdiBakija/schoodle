@@ -53,7 +53,7 @@ app.listen(PORT, () => {
 });
 
 
-<<<<<<< HEAD
+
 // var eventObj = {
 //   event_creator_name: 'Mark',
 //   event_creator_email: '123@funny.com',
@@ -63,17 +63,7 @@ app.listen(PORT, () => {
 //   event_info_user_input_loc: "123 Fake Street",
 //   event_dates_user_input: [{startDateTime: '2020/04/20 16:20', endDateTime: '2020/04/20 16:40'}, {startDateTime: '2020/04/20 4:20', endDateTime: '2020/04/20 4:45'}]
 //   }
-=======
-var eventObj = {
-  event_creator_name: 'Mark',
-  event_creator_email: '123@funny.com',
-  url: 'scoobydoo',
-  event_title_user_input: "Spaghetti Party" ,
-  event_info_user_input_desc: "Good pasta here",
-  event_info_user_input_loc: "123 Fake Street",
-  event_dates_user_input: [{startDateTime: '2020/04/20 16:20', endDateTime: '2020/04/20 16:40'}, {startDateTime: '2020/04/20 4:20', endDateTime: '2020/04/20 4:45'}]
-  }
->>>>>>> maggie_routes
+
 
 
 

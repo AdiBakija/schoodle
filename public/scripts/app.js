@@ -29,8 +29,7 @@ $(document).ready(function(){
   var event_title_user_input;
   var event_info_user_input_desc;
   var event_info_user_input_loc;
-  var event_date_user_input1;
-  var event_date_user_input2;
+  var event_dates_user_input = [];
   var event_creator_name;
   var event_creator_email;
 
@@ -82,19 +81,78 @@ $(document).ready(function(){
   })
 
 
-//submit event date
-$event_date.on('submit',function(event){
+
+//add date button
+var number_of_input_dates=1;
+$('.add-date').on('click',function(event){
   event.preventDefault();
-  event_date_user_input1 = $(event.target).find('.event-date1').val();
-  event_date_user_input2 = $(event.target).find('.event-date2').val();
+  number_of_input_dates+=1;
+  let new_date_input = $('.start_end1').clone();
+  new_date_input.removeClass();
+  new_date_input.addClass(`start_end${number_of_input_dates}`);
+  $('.start_end_container').append(new_date_input);
+});
+let date;
+//submit button on dates
+$('.event_date').on('submit',function(event){
+  event.preventDefault();
+
+  for(i=1;i<=number_of_input_dates;i++){
+    date = {starttime:$( `.start_end${i}`).find('.starttime').val(),
+    endtime:$( `.start_end${i}`).find('.endtime').val()};
+    event_dates_user_input.push(date);
+  }
   $.ajax({
-    url:'/api/users/new/date',
-    type:'post'
-  }).done(function(data,status,response){
-    $event_date.css('display','none');
-    $event_creator.css('display','block');
-  })
+          url:'/api/users/new/date',
+          type:'post'
+         })
+          .done(function(data,status,respons){
+            $event_date.css('display','none');
+            $event_creator.css('display','block');
+          });
+
+  //store all dates in an array of objects
+          //event_dates_user_input:[{startDateTime:event_date_user_input1, endDateTime:event_date_user_input2}]
+          //use global variable to keep track of number of dates
+          //take me to next page, creator info page
+          //                             $.ajax({
+                                        //   url:'/api/users/new/date',
+                                        //   type:'post'
+                                        // })
+          //                             .done(function(data,status,respons){
+          //                                $event_date.css('display','none');
+   //                                      $event_creator.css('display','block');})
+  //if it is the submit button
+  console.log('this is submit');
+  //if it is the add button
 })
+
+
+
+
+  //add event listener to edit button
+          //
+
+
+//submit event date
+// $event_date.on('submit',function(event){
+//   event.preventDefault();
+//   event_date_user_input1 = $(event.target).find('.event-date1').val();
+//   event_date_user_input2 = $(event.target).find('.event-date2').val();
+//   $.ajax({
+//     url:'/api/users/new/date',
+//     type:'post'
+//   }).done(function(data,status,response){
+//       $event_date.css('display','none');
+//       $event_creator.css('display','block')
+//   })
+// })
+
+
+
+
+
+
 
 $event_creator.on('submit',function(){
   event.preventDefault();
@@ -106,7 +164,7 @@ $event_creator.on('submit',function(){
     data:{event_title_user_input:event_title_user_input,
       event_info_user_input_desc:event_info_user_input_desc,
       event_info_user_input_loc:event_info_user_input_loc,
-      event_dates_user_input:[{startDateTime:event_date_user_input1, endDateTime:event_date_user_input2}],
+      event_dates_user_input:event_dates_user_input,
       event_creator_name:event_creator_name,
       event_creator_email:event_creator_email}
   }).done(function(data,status,response){
@@ -114,6 +172,7 @@ $event_creator.on('submit',function(){
     //send get request to /api/users/shorturl
     // here data = shorturl
     window.location = 'api/users/new/'+data;
+  }).done(function(data,status,respons){
 
   })
 })

@@ -101,7 +101,6 @@ var availabiltiyArray = [
   {dateids:[4000, 5000, 6000], availability: [0,0,0] ,name: 'N. Person', eventid: 3000}
 ]
 
-<<<<<<< HEAD
 //dataHelpers.addUsers(availabiltiyArray, function(err, result4) {
 //  if (err) {
 //    console.log(error)
@@ -110,8 +109,6 @@ var availabiltiyArray = [
 //})
 
 
-=======
->>>>>>> maggie_routes
 
 
 
