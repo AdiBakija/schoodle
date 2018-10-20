@@ -25,7 +25,7 @@ module.exports = function makeDataHelpers(knex) {
         })
     },
     getDates: function (eventid, callback){
-      knex.select('datetime', 'enddatetime').from('dates')
+      knex.select('id','datetime', 'enddatetime').from('dates')
         .where('eventid', '=', eventid)
         .orderBy('id')
         .asCallback(function(err, rows) {
@@ -66,8 +66,8 @@ module.exports = function makeDataHelpers(knex) {
               //if we would prefer an array, we could order the query better and make userObj userArray
               for (var user of rows2) {
                 let userArray = []
+                userArray.push(user.userid)
                 userArray.push(user.name)
-                console.log(user)
                 for (var row of rowsFirst) {
                   if (row.userid === user.userid) {
                     userArray.push(row.available)

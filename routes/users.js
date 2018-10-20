@@ -1,9 +1,11 @@
 "use strict";
 
-const express = require('express');
-const router  = express.Router();
 
-module.exports = (dataHelpers) => {
+const express   = require('express');
+const router    = express.Router();
+const dbAccess  = require('../util/dbaccess')
+
+module.exports = (dataHelpers, dbAccess) => {
 
   router.get("/", (req, res) => {
     res.status(201).send();
@@ -16,21 +18,31 @@ module.exports = (dataHelpers) => {
     res.status(201).send(); //send a response back, changes are done in app.js using ajax
 });
  router.post('/new/date',(req,res)=>{
-  console.log('in user.js, get post reqest from /new/date');
+  console.log('in date page');
   res.status(201).send(); //send a response back, changes are done in app.js using ajax
 });
  // /api/user/new/creator
 router.post('/new/creator',(req,res)=>{
-  //  var event_title = req.body.event_title_user_input;
-  // var event_desc = req.body.event_info_user_input_desc;
-  // var event_loc = req.body.event_info_user_input_loc;
-  // var event_date_array = req.body.event_dates_user_input;
-  // var event_creator_name = req.body.event_creator_name;
-  // var event_creator_email = req.body.event_creator_email;
+
   let shorturl = generateRandomShortUrl();
 
   //use helper function to store into database
+  let eventObj=req.body;
 
+    dataHelpers.addEmail(eventObj, function (err, result) {
+      if (err) {
+        console.log(err)
+      }
+      dataHelpers.addEvent(eventObj, result, function (err, result2) {
+        if (err) {
+          console.log(err)
+        }
+        dataHelpers.addDates(eventObj, result2, function(err, result3) {
+          console.log("It Got Here", result3)
+        })
+      })
+
+    })
 
 
 
@@ -39,16 +51,29 @@ router.post('/new/creator',(req,res)=>{
   // res.redirect(201,'/api/users/' + shorturl);
   //send shorturl with a response
 
+
   res.json(shorturl).status(201).send();
 
  })
 
 // /api/users/:shorturl
 router.get('/new/:shorturl', (req,res)=>{
+  let templateVar = {url: req.params.shorturl}
+  console.log(templateVar)
+  res.render('shorturl', templateVar);
+})
 
-  //pull data from database using shorturl
+router.put('/loadEvent', (req,res)=> {
+  console.log("REQUEST.BODY", req.body)
 
-  res.render('shorturl');
+  dbAccess.urlToTableRender(req.body.short, (err,event)=> {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      console.log("EVENT", event)
+      res.send(event)
+    }
+  })
 })
 
 function generateRandomShortUrl(){

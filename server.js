@@ -16,7 +16,9 @@ const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
 const dataHelpers = require("./util/data-helpers")(knex);
-const usersRoutes = require("./routes/users");
+const dbaccess = require("./util/dbaccess")(knex, dataHelpers);
+
+const usersRoutes = require("./routes/users")(dataHelpers, dbaccess);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -38,7 +40,7 @@ app.use(express.static("public"));
 
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex, app));
+app.use("/api/users", usersRoutes);
 
 
 // Home page
@@ -51,18 +53,6 @@ app.listen(PORT, () => {
 
   console.log("Example app listening on port " + PORT);
 });
-
-
-// var eventObj = {
-//   event_creator_name: 'Mark',
-//   event_creator_email: '123@funny.com',
-//   url: 'scoobydoo',
-//   event_title_user_input: "Spaghetti Party" ,
-//   event_info_user_input_desc: "Good pasta here",
-//   event_info_user_input_loc: "123 Fake Street",
-//   event_dates_user_input: [{startDateTime: '2020/04/20 16:20', endDateTime: '2020/04/20 16:40'}, {startDateTime: '2020/04/20 4:20', endDateTime: '2020/04/20 4:45'}]
-//   }
-
 
 
 // dataHelpers.addEmail(eventObj, function (err, result) {
