@@ -18,12 +18,35 @@ body {
     background-color: #C0C0C0;
     padding: 2em;
     border-radius: 2em;
+
     .link {
       background-color: #eee;
       padding: 1em;
       margin-bottom: 1em;
       border-radius: 1em;
+      text-align: center;
+      font-size: 2em;
+      p {
+        margin: 0 auto;
+      }
     }
+
+    .start_end_container {
+      padding-bottom: 1em;
+    }
+
+    .start_end {
+      display: block;
+    }
+
+    .starttime {
+      width: 50%;
+    }
+
+    .endtime {
+      width: 50%;
+    }
+
   }
 }
 
