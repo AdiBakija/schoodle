@@ -88,7 +88,7 @@ $('.add-date').on('click',function(event){
   event.preventDefault();
   number_of_input_dates+=1;
   let new_date_input = $('.start_end1').clone();
-  new_date_input.removeClass();
+  new_date_input.removeClass('start_end1');
   new_date_input.addClass(`start_end${number_of_input_dates}`);
   $('.start_end_container').append(new_date_input);
 });
