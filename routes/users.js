@@ -67,7 +67,7 @@ router.get('/new/:shorturl', (req,res)=>{
 })
 
 router.put('/loadEvent', (req,res)=> {
-  console.log("REQUEST.BODY", req.body)
+  //console.log("REQUEST.BODY", req.body)
 
   dbAccess.urlToTableRender(req.body.short, (err,event)=> {
     if (err) {
