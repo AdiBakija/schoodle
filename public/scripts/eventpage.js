@@ -16,11 +16,6 @@ $(document).ready(function(){
     let dates = eventObj.dates
     let users = eventObj.availableArray
 
-    console.log(input)
-
-    console.log(dates)
-
-
     //we need to empty table body
     var htmlToRender = ``
 
@@ -30,29 +25,27 @@ $(document).ready(function(){
                       <td>Participants</td>`
 
       for (i = 0; i < dates.length; i++) {
-        let rowText = `<td class="${dates[i].id}"> ${dates[i].datetime}${dates[i].enddatetime} </td>`
-                //chagne this row Text to a string with formated date/time
+    /*EDIT DATE FORMAT */
         console.log(dates[i].datetime);
+        console.log(dates[i].enddatetime);
         let start = new Date(dates[i].datetime);
         let end = new Date(dates[i].enddatetime);
-
-        let start_month = start.getUTCMonth();
-        let start_day = start.getUTCDay();
-        let start_hour = start.getUTCHours();
+        let start_weekDay = start.toString().slice(0,3);
+        let start_month = start.toString().slice(4,7);
+        let start_day = start.toString().slice(8,10);
+        let start_hour = dates[i].datetime.slice(11,13);
         let start_minutes=start.getUTCMinutes();
-        let end_month= end.getUTCMonth();
-        let end_day=end.getUTCDay();;
-        let end_hour= end.getUTCHours();
+
+        let end_weekDay = end.toString().slice(0,3);
+        let end_month= end.toString().slice(4,7);
+        let end_day=end.toString().slice(8,10);
+        let end_hour= dates[i].enddatetime.slice(11,13);
         let end_minutes= end.getUTCMinutes();
-        console.log('start',start_month,start_day,start_hour,start_minutes,'end',end_month,end_day,end_hour,end_minutes);
 
+    /*end of EDIT DATE FORMAT*/
 
-
-        // console.log(d.getUTCHours()); // Hours
-        // console.log(d.getUTCMinutes());
-        // console.log(d.getUTCSeconds());
-
-
+        let rowText = `<td class="${dates[i].id}"> ${start_month}${start_day} ${start_weekDay} ${start_hour}:${start_minutes} -
+          ${end_month}${end_day} ${end_weekDay} ${end_hour}:${end_minutes} </td>`
         firstRow += rowText
       }
 
