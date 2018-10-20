@@ -26,7 +26,7 @@ $(document).ready(function(){
 
     $('.table-body').empty()
 
-    var firstRow = `<tr class="${eventid}">
+    var firstRow = `<tr class="${eventObj.eventid}">
                       <td>Participants</td>`
 
       for (i = 0; i < dates.length; i++) {

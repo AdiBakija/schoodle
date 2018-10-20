@@ -98,10 +98,14 @@ $('.event_date').on('submit',function(event){
   event.preventDefault();
 
   for(i=1;i<=number_of_input_dates;i++){
-    date = {starttime:$( `.start_end${i}`).find('.starttime').val(),
-    endtime:$( `.start_end${i}`).find('.endtime').val()};
-    console.log(date)
-    event_dates_user_input.push(date);
+
+    date = {starttime:$( `.start_end${i}`).find('.starttime').val().toString(),
+    endtime:$( `.start_end${i}`).find('.endtime').val().toString()};
+    console.log("THIS IS THE DATE AFTER THE JQUERY", date)
+    event_dates_user_input.push(date)
+    console.log("THIS IS THE VAR DATE OBJECT WE'RE PUSHING TO", event_dates_user_input)
+    ;
+
   }
   $.ajax({
           url:'/api/users/new/date',
