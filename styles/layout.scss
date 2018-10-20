@@ -1,6 +1,7 @@
 header {
   nav {
     margin-bottom: 1em;
+    padding-right: 1em;
   }
 
 }
@@ -110,9 +111,9 @@ body {
 
   }
 
-  .form-group {
+/*  .form-group {
     width: 15em;
-  }
+  }*/
 
 }
 
@@ -123,10 +124,14 @@ body {
       height: 1em;
     }
 
+    button {
+      float: left;
+    }
+
   }
 
-  .form-group {
+/*  .form-group {
     width: 15em;
-  }
+  }*/
 
 }
