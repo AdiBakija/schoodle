@@ -1,10 +1,11 @@
 "use strict";
 
 
-const express = require('express');
-const router  = express.Router();
+const express   = require('express');
+const router    = express.Router();
+const dbAccess  = require('../util/dbaccess')
 
-module.exports = (dataHelpers) => {
+module.exports = (dataHelpers, dbAccess) => {
 
   router.get("/", (req, res) => {
     res.status(201).send();
@@ -56,11 +57,25 @@ dataHelpers.addEmail(eventObj, function (err, result) {
 
 // /api/users/:shorturl
 router.get('/new/:shorturl', (req,res)=>{
-
-  //pull data from database using shorturl
-
-  res.render('schoodleEvent');
+  let templateVar = {url: req.params.shorturl}
+  console.log(templateVar)
+  res.render('shorturl', templateVar);
 })
+
+router.put('/loadEvent', (req,res)=> {
+  console.log("REQUEST.BODY", req.body)
+
+  dbAccess.urlToTableRender(req.body.short, (err,event)=> {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      console.log("EVENT", event)
+      res.send(event)
+    }
+  })
+})
+
+
 
 function generateRandomShortUrl(){
   return Math.random().toString(36).replace('0.','').slice(0,8);

@@ -67,7 +67,6 @@ module.exports = function makeDataHelpers(knex) {
               for (var user of rows2) {
                 let userArray = []
                 userArray.push(user.name)
-                console.log(user)
                 for (var row of rowsFirst) {
                   if (row.userid === user.userid) {
                     userArray.push(row.available)

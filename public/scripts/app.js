@@ -107,7 +107,6 @@ $event_creator.on('submit',function(){
       event_info_user_input_desc:event_info_user_input_desc,
       event_info_user_input_loc:event_info_user_input_loc,
       event_dates_user_input:[{startDateTime:event_date_user_input1, endDateTime:event_date_user_input2}],
-      event_creator_name:event_creator_name,
       event_creator_email:event_creator_email}
   }).done(function(data,status,response){
     //got response from server
