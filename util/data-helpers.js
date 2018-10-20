@@ -118,10 +118,11 @@ module.exports = function makeDataHelpers(knex) {
 
     addDates: async function(eventObj, eventId, callback) {
       for (var date of eventObj.event_dates_user_input) {
+        console.log('Date --------------------------- ', date)
         let dateInsert = await knex('dates').insert({
             eventid: eventId,
-            datetime: date.startDateTime,
-            enddatetime: date.endDateTime
+            datetime: date.starttime,
+            enddatetime: date.endtime
           }).then(id=> {
             console.log('One item added')
           });
