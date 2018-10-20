@@ -3,6 +3,7 @@
 $(document).ready(function(){
 
 
+
   let urlToPass = {short: $('.shorturl').text()}
   var eventObj
   var dates
@@ -10,15 +11,13 @@ $(document).ready(function(){
   var availabiltiyArray = []
   var yesNo = []
 
+
   function useTable (input) {
     //console.log(input)
     //console.log("YES IT IS HERE")
     eventObj = input
     dates = eventObj.dates
     users = eventObj.availableArray
-
-    console.log(input)
-
 
     //we need to empty table body
     var htmlToRender = ``
@@ -29,7 +28,27 @@ $(document).ready(function(){
                       <td>Participants</td>`
 
       for (i = 0; i < dates.length; i++) {
-        let rowText = `<td class="${dates[i].id}"> ${dates[i].datetime}${dates[i].enddatetime} </td>`
+    /*EDIT DATE FORMAT */
+        console.log(dates[i].datetime);
+        console.log(dates[i].enddatetime);
+        let start = new Date(dates[i].datetime);
+        let end = new Date(dates[i].enddatetime);
+        let start_weekDay = start.toString().slice(0,3);
+        let start_month = start.toString().slice(4,7);
+        let start_day = start.toString().slice(8,10);
+        let start_hour = dates[i].datetime.slice(11,13);
+        let start_minutes=start.getUTCMinutes();
+
+        let end_weekDay = end.toString().slice(0,3);
+        let end_month= end.toString().slice(4,7);
+        let end_day=end.toString().slice(8,10);
+        let end_hour= dates[i].enddatetime.slice(11,13);
+        let end_minutes= end.getUTCMinutes();
+
+    /*end of EDIT DATE FORMAT*/
+
+        let rowText = `<td class="${dates[i].id}"> ${start_month}${start_day} ${start_weekDay} ${start_hour}:${start_minutes} -
+          ${end_month}${end_day} ${end_weekDay} ${end_hour}:${end_minutes} </td>`
         firstRow += rowText
       }
 
