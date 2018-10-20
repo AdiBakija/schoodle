@@ -1,6 +1,7 @@
 
 $(document).ready(function(){
-  let urlToPass = {short: '12345678'}
+
+  console.log(urlToPass);
 
   function useTable (input) {
     console.log(input)
