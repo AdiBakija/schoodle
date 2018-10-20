@@ -131,6 +131,7 @@ module.exports = function makeDataHelpers(knex) {
     },
 
     addUsers: async function(availabilityArray, callback) {
+      console.log("IN ADD USERS", availabilityArray)
       for (var user of availabilityArray) {
           if (user.userid) {
             let updatedId = await knex('users').returning('id')
@@ -167,7 +168,7 @@ module.exports = function makeDataHelpers(knex) {
                   dateid: user.dateids[i],
                   available: user.availability[i]
                 }).then((usersDatesId)=>{
-                  console.log("userDateId Added")
+                  return usersDatesId
                 })
               }
             } catch (e) {
@@ -176,8 +177,8 @@ module.exports = function makeDataHelpers(knex) {
         }
 
       }
+      callback(null, "success")
     }
-
   }
 }
 

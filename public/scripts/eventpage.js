@@ -97,17 +97,93 @@ $(document).ready(function(){
 
   }
 
+
+function addEventListeners() {
+
+
+
+
+  $('#buttonforadding').on('click', function(event){
+    event.preventDefault();
+
+    let newParticipant = {eventid: eventObj.eventid, dateids: [], availability: []}
+    for (i = 0; i < dates.length; i++){
+      newParticipant.dateids.push(dates[i].id)
+    }
+    if ($('.participant-name').val()) {
+      newParticipant.name = $('.participant-name').val()
+
+      newParticipant.availability = yesNo
+      availabiltiyArray.push(newParticipant)
+    }
+
+    let availabilityToDatabase = {avArray: availabiltiyArray}
+
+    $.ajax({
+        url: '/api/users/loadEvent',
+        type: 'POST',
+        dataType: "JSON",
+        data: availabilityToDatabase
+    }).then(getEvent())
+
+    function happy() {
+      console.log("Happy")
+    }
+
+
+  })
+}
+
+
+
+
   function getEvent () {
+    console.log("inside getEvent")
     $.ajax({
         url: '/api/users/loadEvent',
         type: 'PUT',
         dataType: "JSON",
-        data: urlToPass,
-        success: useTable
+        data: urlToPass
+    }).done(function(data,status,response){
+      console.log('in done function')
+      console.log(data);
+      useTable(data);
     })
   }
 
   getEvent()
 
+
+
+
+  function processDates (date) {
+    let returnedDate = date.toLocaleString()
+    return returnedDate
+  }
+
+$('.form-check-input').on('click', function(event){
+    event.preventDefault()
+    console.log("WORKING")
+  })
+
+
+$( function() {
+  $( document ).on( "change", ":checkbox", function () {
+    if (yesNo[this.id.slice(3,)] == 1) {
+      yesNo[this.id.slice(3,)] = 0
+    }else {
+      yesNo[this.id.slice(3,)] = 1
+    }
+  });
 });
+
+
+
+$('#box1').prop('checked', function() {
+  console.log("FUCK")
+})
+
+addEventListeners()
+
+})
 
