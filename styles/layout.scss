@@ -2,9 +2,7 @@ header {
   nav {
     margin-bottom: 1em;
   }
-  button {
-    float: right;
-  }
+
 }
 
 body {
@@ -58,7 +56,7 @@ body {
       }
 
       .participant-name {
-        width: 15em;
+        width: 12em;
       }
 
       .edit {
@@ -87,7 +85,6 @@ body {
 
   }
 
-
   footer {
     margin-top: 4em;
   }
@@ -102,4 +99,34 @@ body {
 }
 .event_creator{
   display:none;
+}
+
+@media screen and (max-width: 640px) {
+  header {
+
+    nav {
+      height: 1em;
+    }
+
+  }
+
+  .form-group {
+    width: 15em;
+  }
+
+}
+
+@media screen and (max-width: 767px) {
+  header {
+
+    nav {
+      height: 1em;
+    }
+
+  }
+
+  .form-group {
+    width: 15em;
+  }
+
 }
