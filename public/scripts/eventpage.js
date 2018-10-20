@@ -91,14 +91,5 @@ $(document).ready(function(){
 
   getEvent()
 
-
-
-  function processDates (date) {
-    let returnedDate = date.toLocaleString()
-    return returnedDate
-  }
-
-
-
-})
+});
 
