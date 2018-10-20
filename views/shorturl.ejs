@@ -4,6 +4,9 @@
 
     <title>Schoodle Home Page</title>
 
+    <!-- Roboto Condensed Font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,700,700i" rel="stylesheet">
+
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
 
@@ -81,14 +84,30 @@
               </div>
             </tr>
             <tr>
-              <td class="name col1">John Smith</td>
-              <td>Yes = 1</td>
-              <td>No = 0</td>
+              <td class="name col1">
+                <button class="edit btn btn-info btn-xs" type="button">
+                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </button>John Smith
+              </td>
+              <td>
+                <input class="yes-no form-check-input" type="checkbox" value="yes" checked disabled>
+              </td>
+              <td>
+                <input class="yes-no form-check-input" type="checkbox" value="yes" disabled>
+              </td>
             </tr>
             <tr>
-              <td class="name col1">Jon Jones</td>
-              <td>No = 0</td>
-              <td>Yes = 1</td>
+              <td class="name col1">
+                <button class="edit btn btn-info btn-xs" type="button">
+                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </button>Jon Jones
+              </td>
+              <td>
+                <input class="yes-no form-check-input" type="checkbox" value="yes" checked disabled>
+              </td>
+              <td>
+                <input class="yes-no form-check-input" type="checkbox" value="yes" checked disabled>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -104,9 +123,9 @@
 
     </main>
 
-  </body>
-
     <% include ./partials/_footer %>
+
+  </body>
 
 </html>
 
