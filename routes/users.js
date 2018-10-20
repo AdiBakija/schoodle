@@ -29,7 +29,8 @@ router.post('/new/creator',(req,res)=>{
   //use helper function to store into database
   let eventObj=req.body;
   eventObj.url = shorturl
-  console.log(eventObj)
+  console.log("THIS IS THE EVENT OBJECT", eventObj)
+  console.log("THIS IS THE URL", eventObj.url)
 
     dataHelpers.addEmail(eventObj, function (err, result) {
       if (err) {
