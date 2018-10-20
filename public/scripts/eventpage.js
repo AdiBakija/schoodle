@@ -1,9 +1,9 @@
 
-$(document).ready(function(){
-  let shortURL = $('.shorturl').val()
-  console.log($('.shorturl').val())
 
-  let urlToPass = {short: '1234567'}
+$(document).ready(function(){
+
+
+  let urlToPass = {short: $('.shorturl').text()}
   console.log(urlToPass)
 
   function useTable (input) {
@@ -18,21 +18,18 @@ $(document).ready(function(){
     //we need to empty table body
     var htmlToRender = ``
 
-
+    $('.table-body').empty()
 
     var firstRow = `<tr>
                       <td>Participants</td>`
 
-                      for (i = 0; i < dates.length; i++) {
-                        let rowText = `<td> ${dates[i].datetime}\n${dates[i].datetime} </td>`
+      for (i = 0; i < dates.length; i++) {
+        let rowText = `<td> ${processDates(dates[i].datetime)}${processDates(dates[i].datetime)} </td>`
+        firstRow += rowText
+      }
 
-                      }
-                      `<td> October 21, 2018 </td>
-                      <td> October 22, 2018 </td>
-                    </tr>`
-
-
-
+      firstRow += `</tr>`
+      $('.table-body').append(firstRow)
 
 
   //         <tr>
@@ -93,6 +90,12 @@ $(document).ready(function(){
 
   getEvent()
 
+
+
+  function processDates (date) {
+    let returnedDate = date.toLocaleString()
+    return returnedDate
+  }
 
 
 
