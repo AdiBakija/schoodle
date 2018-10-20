@@ -29,10 +29,6 @@ body {
 
     }
 
-    .form-group {
-      margin: 0 auto;
-    }
-
     td .poll {
       padding: 1em;
     }
@@ -53,16 +49,21 @@ body {
         text-align: center;
       }
 
+      .form-group {
+        margin-bottom: 0;
+      }
+
       .poll {
         vertical-align: middle;
       }
 
       .participant-name {
-        width: 10em;
+        width: 15em;
       }
 
       .col1 {
-        vertical-align: left;
+        text-align: left;
+        width: 20em;
       }
 
     }
