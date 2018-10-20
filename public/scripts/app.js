@@ -98,8 +98,9 @@ $('.event_date').on('submit',function(event){
   event.preventDefault();
 
   for(i=1;i<=number_of_input_dates;i++){
-    date = {starttime:$( `.start_end${i}`).find('.starttime').val(),
-    endtime:$( `.start_end${i}`).find('.endtime').val()};
+    date = {starttime:$( `.start_end1`).find('.starttime').val(),
+    endtime:$( `.start_end1`).find('.endtime').val()};
+    console.log(date)
     event_dates_user_input.push(date);
   }
   $.ajax({
