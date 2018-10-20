@@ -27,6 +27,16 @@ $(document).ready(function(){
 
       for (i = 0; i < dates.length; i++) {
         let rowText = `<td> ${processDates(dates[i].datetime)}${processDates(dates[i].datetime)} </td>`
+        //chagne this row Text to a string with formated date/time
+        console.log(dates[i].datetime);
+        var d = new Date('2015-03-04T00:00:00.000Z');
+        // console.log(d.getUTCHours()); // Hours
+        // console.log(d.getUTCMinutes());
+        // console.log(d.getUTCSeconds());
+
+
+
+
         firstRow += rowText
       }
 
