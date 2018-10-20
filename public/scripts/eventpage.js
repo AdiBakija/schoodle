@@ -22,7 +22,7 @@ $(document).ready(function(){
     $('.table-body').empty()
 
     var firstRow = `<tr class="${eventObj.eventid}">
-                      <td>Participants</td>`
+                      <td class="col1">Participants</td>`
 
       for (i = 0; i < dates.length; i++) {
     /*EDIT DATE FORMAT */
@@ -57,7 +57,7 @@ $(document).ready(function(){
           <tr>
             <div class="add_participant_poll">
 
-              <td>
+              <td class="participant col1">
                 <form class="add_participant">
                   <div class="form-group">
                     <input type="text" class="participant-name form-control" name="participant-name" placeholder="Name">
@@ -66,7 +66,7 @@ $(document).ready(function(){
               </td>`
     for (i = 0; i < dates.length; i++) {
       let availableBoxes =
-              `<td>
+              `<td class="poll">
                 <form class="add_poll">
                   <div class="form-group">
                     <input class="yes-no form-check-input" type="checkbox" value="">
@@ -78,9 +78,21 @@ $(document).ready(function(){
 
    var userRows = ``
 
-   for (i = 0; i < users.length; i++) {
-     rowItem =`<tr class="${users[i][0]}">
-                <td class="name">${users[i][1]}</td>`
+  for (i = 0; i < users.length; i++) {
+    rowItem =`<tr class="${users[i][0]}">
+                <td class="name col1">
+                  <button class="edit btn btn-info btn-xs" type="button">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                  </button>${users[i][1]}
+                </td>`
+
+    availabilityObject = {}
+    availabilityObject.eventid = eventObj.eventid
+    availabilityObject.userid = users[i][0]
+    availabilityObject.name = users[i][1]
+    availabilityObject.dateids = []
+    availabilityObject.availability = []
+
      for (j = 2;j < users[0].length; j++) {
        columnItem = `<td>${users[i][j]}</td>`
        rowItem += columnItem
