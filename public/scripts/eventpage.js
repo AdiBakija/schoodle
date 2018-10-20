@@ -129,15 +129,23 @@ function addEventListeners() {
     if ($('.participant-name').val()) {
       newParticipant.name = $('.participant-name').val()
 
-      for (var date = 0; date < dates.length; date++) {
-        console.log(`#box${date}`)
-        let newParticipantAvailable = $(`#box${date}`).val()
-        newParticipant.availability.push(newParticipantAvailable)
-      }
+      newParticipant.availability = yesNo
       availabiltiyArray.push(newParticipant)
     }
 
-    console.log(availabiltiyArray)
+    let availabilityToDatabase = {avArray: availabiltiyArray}
+
+    $.ajax({
+        url: '/api/users/loadEvent',
+        type: 'POST',
+        dataType: "JSON",
+        data: availabilityToDatabase
+    }).then(getEvent())
+
+    function happy() {
+      console.log("Happy")
+    }
+
 
   })
 }
@@ -145,12 +153,16 @@ function addEventListeners() {
 
 
   function getEvent () {
+    console.log("inside getEvent")
     $.ajax({
         url: '/api/users/loadEvent',
         type: 'PUT',
         dataType: "JSON",
-        data: urlToPass,
-        success: useTable
+        data: urlToPass
+    }).done(function(data,status,response){
+      console.log('in done function')
+      console.log(data);
+      useTable(data);
     })
   }
 
@@ -163,25 +175,27 @@ function addEventListeners() {
     return returnedDate
   }
 
-$('.participant-name').on('click', function(event){
+$('.form-check-input').on('click', function(event){
     event.preventDefault()
     console.log("WORKING")
   })
-$(`.yes-no`).is(':checked', function(event) {
-    console.log("EVENT ID",event.id)
-    console.log("EVENT",event)
-  })
 
-$('input[type="checkbox"]').click(function(){
-           if($(this).prop("checked") == true){
-               alert("Checkbox is checked.");
-           }
-           else if($(this).prop("checked") == false){
-               alert("Checkbox is unchecked.");
-           }
+
+$( function() {
+  $( document ).on( "change", ":checkbox", function () {
+    if (yesNo[this.id.slice(3,)] == 1) {
+      yesNo[this.id.slice(3,)] = 0
+    }else {
+      yesNo[this.id.slice(3,)] = 1
+    }
+  });
 });
 
 
+
+$('#box1').prop('checked', function() {
+  console.log("FUCK")
+})
 
 addEventListeners()
 
