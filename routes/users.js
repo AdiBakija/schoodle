@@ -48,7 +48,7 @@ router.get('/new/:shorturl', (req,res)=>{
 
   //pull data from database using shorturl
 
-  res.render('schoodleEvent');
+  res.render('shorturl');
 })
 
 function generateRandomShortUrl(){

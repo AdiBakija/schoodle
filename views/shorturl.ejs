@@ -38,7 +38,7 @@
       <div class="shadow p-3 mb-5">
 
       <section class="link">
-        <p>This is the shareable link</p>
+        <p>Why haven't we made this a shareable link yet?!</p>
       </section>
 
       <section class="poll-table">
@@ -62,14 +62,14 @@
                 <td>
                   <form class="add_poll">
                     <div class="form-group">
-                      <input type="text" class="yes-no form-control" name="participant-name" placeholder="Y/N">
+                      <input class="yes-no form-check-input" type="checkbox" value="">
                     </div>
                   </form>
                 </td>
                 <td>
                   <form class="add_poll">
                     <div class="form-group">
-                      <input type="text" class="yes-no form-control" name="participant-name" placeholder="Y/N">
+                      <input class="yes-no form-check-input" type="checkbox" value="">
                     </div>
                   </form>
                 </td>
@@ -77,13 +77,13 @@
             </tr>
             <tr>
               <td class="name">John Smith</td>
-              <td>Yes</td>
-              <td>No</td>
+              <td>Yes = 1</td>
+              <td>No = 0</td>
             </tr>
             <tr>
               <td class="name">Jon Jones</td>
-              <td>No</td>
-              <td>Yes</td>
+              <td>No = 0</td>
+              <td>Yes = 1</td>
             </tr>
           </tbody>
         </table>
@@ -101,9 +101,7 @@
 
   </body>
 
-  <footer>
     <% include ./partials/_footer %>
-  </footer>
 
 </html>
 
