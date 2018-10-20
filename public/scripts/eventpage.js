@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 
   let urlToPass = {short: $('.shorturl').text()}
-  console.log(urlToPass)
+
 
   function useTable (input) {
     //console.log(input)
@@ -12,6 +12,10 @@ $(document).ready(function(){
 
     let eventObj = input
     let dates = eventObj.dates
+    let users = eventObj.availableArray
+
+    console.log(input)
+
     console.log(dates)
 
 
@@ -20,61 +24,58 @@ $(document).ready(function(){
 
     $('.table-body').empty()
 
-    var firstRow = `<tr>
+    var firstRow = `<tr class="${eventid}">
                       <td>Participants</td>`
 
       for (i = 0; i < dates.length; i++) {
-        let rowText = `<td> ${processDates(dates[i].datetime)}${processDates(dates[i].datetime)} </td>`
+        let rowText = `<td class="${dates[i].id}"> ${dates[i].datetime}${dates[i].enddatetime} </td>`
         firstRow += rowText
       }
 
       firstRow += `</tr>`
       $('.table-body').append(firstRow)
 
+    var addUser = `
+          <tr>
+            <div class="add_participant_poll">
 
-  //         <tr>
-  //           <td>Participants</td>
-  //           <td> October 21, 2018 </td>
-  //           <td> October 22, 2018 </td>
-  //         </tr>
-  //         <tr>
-  //           <div class="add_participant_poll">
-  //             <td>
-  //               <form class="add_participant">
-  //                 <div class="form-group">
-  //                   <input type="text" class="participant-name form-control" name="participant-name" placeholder="Name">
-  //                 </div>
-  //               </form>
-  //             </td>
-  //             <td>
-  //               <form class="add_poll">
- //                   <div class="form-group">
- //                     <input class="yes-no form-check-input" type="checkbox" value="">
- //                   </div>
- //                 </form>
- //               </td>
- //               <td>
- //                 <form class="add_poll">
- //                   <div class="form-group">
- //                     <input class="yes-no form-check-input" type="checkbox" value="">
- //                   </div>
- //                 </form>
- //               </td>
- //             </div>
- //           </tr>
- //           <tr>
- //             <td class="name">John Smith</td>
- //             <td>Yes = 1</td>
- //             <td>No = 0</td>
- //           </tr>
- //           <tr>
- //             <td class="name">Jon Jones</td>
- //             <td>No = 0</td>
- //             <td>Yes = 1</td>
- //           </tr>
- //         </tbody>
+              <td>
+                <form class="add_participant">
+                  <div class="form-group">
+                    <input type="text" class="participant-name form-control" name="participant-name" placeholder="Name">
+                  </div>
+                </form>
+              </td>`
+    for (i = 0; i < dates.length; i++) {
+      let availableBoxes =
+              `<td>
+                <form class="add_poll">
+                  <div class="form-group">
+                    <input class="yes-no form-check-input" type="checkbox" value="">
+                  </div>
+                </form>`
+       addUser += availableBoxes
+    }
+    $('.table-body').append(addUser)
 
+   var userRows = ``
 
+   for (i = 0; i < users.length; i++) {
+     rowItem =`<tr class="${users[i][0]}">
+                <td class="name">${users[i][1]}</td>`
+     for (j = 2;j < users[0].length; j++) {
+       columnItem = `<td>${users[i][j]}</td>`
+       rowItem += columnItem
+     }
+     rowItem += `</tr>`
+     userRows += rowItem
+   }
+   $('.table-body').append(userRows)
+//
+//var availabiltiyArray = [
+//  {userid: 4000, dateids: [4000, 5000, 6000], availability: [1, 1, 1], name: 'Sir Dr. Mr. Professor Spaghetti Esq.', eventid: 2000},
+//  {dateids:[4000, 5000, 6000], availability: [0,0,0] ,name: 'N. Person', eventid: 3000}
+//]
 
   }
 
