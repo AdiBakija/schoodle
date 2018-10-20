@@ -26,28 +26,66 @@ body {
       border-radius: 1em;
       text-align: center;
       font-size: 2em;
-      p {
-        margin: 0 auto;
+
+    }
+
+    .form-group {
+      margin: 0 auto;
+    }
+
+    td .poll {
+      padding: 1em;
+    }
+
+    p {
+      margin: 0 auto;
+    }
+
+    table {
+
+      td {
+        vertical-align: middle;
+        text-align: center;
       }
+
+      .participant {
+        vertical-align: middle;
+        text-align: center;
+      }
+
+      .poll {
+        vertical-align: middle;
+      }
+
+      .participant-name {
+        width: 10em;
+      }
+
+      .col1 {
+        vertical-align: left;
+      }
+
+    }
+
+    footer {
+      margin-top: 4em;
     }
 
     .start_end_container {
       padding-bottom: 1em;
     }
-
     .start_end {
       display: block;
     }
-
     .starttime {
       width: 50%;
     }
-
     .endtime {
       width: 50%;
     }
 
   }
+
 }
 
 .event_info{
