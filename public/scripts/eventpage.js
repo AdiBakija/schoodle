@@ -1,20 +1,21 @@
-
-
 $(document).ready(function(){
 
 
 
   let urlToPass = {short: $('.shorturl').text()}
-
+  var eventObj
+  var dates
+  var users
+  var availabiltiyArray = []
+  var yesNo = []
 
 
   function useTable (input) {
     //console.log(input)
     //console.log("YES IT IS HERE")
-
-    let eventObj = input
-    let dates = eventObj.dates
-    let users = eventObj.availableArray
+    eventObj = input
+    dates = eventObj.dates
+    users = eventObj.availableArray
 
     //we need to empty table body
     var htmlToRender = ``
@@ -26,8 +27,7 @@ $(document).ready(function(){
 
       for (i = 0; i < dates.length; i++) {
     /*EDIT DATE FORMAT */
-        console.log(dates[i].datetime);
-        console.log(dates[i].enddatetime);
+
         let start = new Date(dates[i].datetime);
         let end = new Date(dates[i].enddatetime);
         let start_weekDay = start.toString().slice(0,3);
@@ -41,12 +41,11 @@ $(document).ready(function(){
         let end_day=end.toString().slice(8,10);
         let end_hour= dates[i].enddatetime.slice(11,13);
         let end_minutes= end.getUTCMinutes();
-        /*end of EDIT DATE FORMAT*/
+
+    /*end of EDIT DATE FORMAT*/
 
         let rowText = `<td class="${dates[i].id}"> ${start_month}${start_day} ${start_weekDay} ${start_hour}:${start_minutes} -
           ${end_month}${end_day} ${end_weekDay} ${end_hour}:${end_minutes} </td>`
-
-
         firstRow += rowText
       }
 
@@ -69,10 +68,11 @@ $(document).ready(function(){
               `<td class="poll">
                 <form class="add_poll">
                   <div class="form-group">
-                    <input class="yes-no form-check-input" type="checkbox" value="">
+                    <input class="yes-no form-check-input" id="box${i}" type="checkbox" value="">
                   </div>
                 </form>`
        addUser += availableBoxes
+       yesNo.push(0)
     }
     $('.table-body').append(addUser)
 
@@ -81,7 +81,10 @@ $(document).ready(function(){
   for (i = 0; i < users.length; i++) {
     rowItem =`<tr class="${users[i][0]}">
                 <td class="name col1">
-                  <button class="edit btn btn-info btn-xs" type="button">
+                  <button class="delete btn btn-danger btn-xs" type="button">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  </button>
+                  <button class="edit${users[i][0]} btn btn-info btn-xs" type="button">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                   </button>${users[i][1]}
                 </td>`
@@ -94,27 +97,48 @@ $(document).ready(function(){
     availabilityObject.availability = []
 
      for (j = 2;j < users[0].length; j++) {
-       columnItem = `<td>${users[i][j]}</td>`
+
+      if (users[i][j] === 1) {
+       columnItem = `<td><input class="yes-no form-check-input" type="checkbox" value="yes" checked disabled></td>`
        rowItem += columnItem
+
+      } else {
+
+        columnItem = `<td><input class="yes-no form-check-input" type="checkbox" value="no" disabled></td>`
+        rowItem += columnItem
+      }
+
+       let k = j - 2
+       availabilityObject.dateids.push(dates[k].id)
+       availabilityObject.availability.push(users[i][j])
      }
      rowItem += `</tr>`
      userRows += rowItem
+     availabiltiyArray.push(availabilityObject)
    }
    $('.table-body').append(userRows)
-//
+
 //var availabiltiyArray = [
 //  {userid: 4000, dateids: [4000, 5000, 6000], availability: [1, 1, 1], name: 'Sir Dr. Mr. Professor Spaghetti Esq.', eventid: 2000},
 //  {dateids:[4000, 5000, 6000], availability: [0,0,0] ,name: 'N. Person', eventid: 3000}
-//]
+//
+   for (i = 0; i < users.length; i++) {
+    console.log('in edit button listner');
+      let editbutton = `.edit${users[i][0]}`
+      let checkboxClass = $( `.${users[i][0]}`)
+      $(editbutton).on('click',function(event){
+        event.preventDefault();
+        //take the user name value
+        console.log(checkboxClass);
+        console.log($(checkboxClass).find('.yes-no'));
+        $(checkboxClass).find('.yes-no').prop( "disabled", false );
+        //enable the checkboxes
+      })
+   }
 
   }
 
-
 function addEventListeners() {
-
-
-
-
   $('#buttonforadding').on('click', function(event){
     event.preventDefault();
 
@@ -139,32 +163,28 @@ function addEventListeners() {
     }).then(getEvent())
 
     function happy() {
-      console.log("Happy")
+
     }
-
-
   })
+//for loop to add event listener on edit button
+
 }
 
 
 
-
   function getEvent () {
-    console.log("inside getEvent")
+
     $.ajax({
         url: '/api/users/loadEvent',
         type: 'PUT',
         dataType: "JSON",
         data: urlToPass
     }).done(function(data,status,response){
-      console.log('in done function')
-      console.log(data);
       useTable(data);
     })
   }
 
   getEvent()
-
 
 
 
@@ -175,7 +195,7 @@ function addEventListeners() {
 
 $('.form-check-input').on('click', function(event){
     event.preventDefault()
-    console.log("WORKING")
+
   })
 
 
@@ -190,12 +210,8 @@ $( function() {
 });
 
 
-
-$('#box1').prop('checked', function() {
-  console.log("FUCK")
-})
-
 addEventListeners()
 
-})
 
+
+})
