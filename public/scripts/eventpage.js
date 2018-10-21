@@ -126,11 +126,12 @@ function addEventListeners() {
     for (i = 0; i < dates.length; i++){
       newParticipant.dateids.push(dates[i].id)
     }
-    if ($('.participant-name').val()) {
+    if ($('.participant-name').val() > 0) {
       newParticipant.name = $('.participant-name').val()
 
       newParticipant.availability = yesNo
       availabiltiyArray.push(newParticipant)
+      newParticipant.availability = []
     }
 
     let availabilityToDatabase = {avArray: availabiltiyArray}
@@ -194,7 +195,7 @@ $( function() {
 
 
 $('#box1').prop('checked', function() {
-  console.log("FUCK")
+
 })
 
 addEventListeners()
