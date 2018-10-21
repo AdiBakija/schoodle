@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
 
 
@@ -87,9 +85,12 @@ $(document).ready(function(){
                   <button class="delete btn btn-danger btn-xs" type="button">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                   </button>
-                  <button class="edit${users[i][0]} btn btn-info btn-xs " type="button">
+                  <button class="edit${users[i][0]} btn btn-info btn-xs" type="button">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                  </button>${users[i][1]}
+                  </button>
+                  <button class="save${users[i][0]} btn btn-info btn-xs" type="button">
+                    <span aria-hidden="true">Save</span>
+                  </button>    ${users[i][1]}
                 </td>`
 
     availabilityObject = {}
@@ -135,6 +136,32 @@ $(document).ready(function(){
       })
     }
 
+   for (i = 0; i < users.length; i++) {
+    console.log('in edit button listner');
+      let editbutton = `.edit${users[i][0]}`
+      let checkboxClass = $( `.${users[i][0]}`)
+
+      $(editbutton).on('click',function(event){
+        event.preventDefault();
+        //take the user name value
+        console.log(checkboxClass);
+        console.log($(checkboxClass).find('.yes-no'));
+        checkboxClass.find('.yes-no').prop( "disabled", false );
+        //enable the checkboxes
+      })
+
+      //save button handler
+      let savebutton = `.save${users[i][0]}`
+      $(savebutton).on('click',function(event){
+        event.preventDefault();
+        checkboxClass.find('.yes-no').prop( "disabled", true );
+      })
+      //disable checkboxes
+      //samilar to submit button, call database functions to update the availability
+
+   }
+
+
 
 //var availabiltiyArray = [
 //  {userid: 4000, dateids: [4000, 5000, 6000], availability: [1, 1, 1], name: 'Sir Dr. Mr. Professor Spaghetti Esq.', eventid: 2000},
@@ -147,7 +174,7 @@ function addEventListeners() {
 
 
 
-
+//The bug could potentially be within this block of code
   $('#buttonforadding').on('click', function(event){
     event.preventDefault();
 
@@ -160,6 +187,7 @@ function addEventListeners() {
 
       newParticipant.availability = yesNo
       availabiltiyArray.push(newParticipant)
+      newParticipant = {eventid: eventObj.eventid, dateids: [], availability: []};
     }
 
     let availabilityToDatabase = {avArray: availabiltiyArray}
@@ -170,7 +198,7 @@ function addEventListeners() {
         dataType: "JSON",
         data: availabilityToDatabase
     }).then(getEvent())
-
+    window.location.reload();
     function happy() {
       console.log("Happy")
     }
@@ -229,4 +257,3 @@ $('#box1').prop('checked', function() {
 addEventListeners()
 
 })
-
