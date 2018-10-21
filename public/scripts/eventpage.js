@@ -84,7 +84,10 @@ $(document).ready(function(){
   for (i = 0; i < users.length; i++) {
     rowItem =`<tr class="${users[i][0]}">
                 <td class="name col1">
-                  <button class="edit btn btn-info btn-xs" type="button">
+                  <button class="delete btn btn-danger btn-xs" type="button">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  </button>
+                  <button class="edit${users[i][0]} btn btn-info btn-xs " type="button">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                   </button>${users[i][1]}
                 </td>`
@@ -97,8 +100,16 @@ $(document).ready(function(){
     availabilityObject.availability = []
 
      for (j = 2;j < users[0].length; j++) {
-       columnItem = `<td>${users[i][j]}</td>`
+
+      if (users[i][j] === 1) {
+       columnItem = `<td><input class="yes-no form-check-input" type="checkbox" value="yes" checked disabled></td>`
        rowItem += columnItem
+
+      } else {
+
+        columnItem = `<td><input class="yes-no form-check-input" type="checkbox" value="no" disabled></td>`
+        rowItem += columnItem
+      }
 
        let k = j - 2
        availabilityObject.dateids.push(dates[k].id)
@@ -107,8 +118,22 @@ $(document).ready(function(){
      rowItem += `</tr>`
      userRows += rowItem
      availabiltiyArray.push(availabilityObject)
-   }
-   $('.table-body').append(userRows)
+  }
+  $('.table-body').append(userRows)
+
+    for (i = 0; i < users.length; i++) {
+    console.log('in edit button listner');
+    let editbutton = `.edit${users[i][0]}`
+    let checkboxClass = $( `.${users[i][0]}`)
+      $(editbutton).on('click',function(event){
+        event.preventDefault();
+        //take the user name value
+        console.log(checkboxClass);
+        console.log($(checkboxClass).find('.yes-no'));
+        $(checkboxClass).find('.yes-no').prop( "disabled", false );
+        //enable the checkboxes
+      })
+    }
 
 
 //var availabiltiyArray = [
