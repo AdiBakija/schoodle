@@ -10,6 +10,7 @@ $(document).ready(function(){
   var yesNo = []
 
 
+
   function useTable (input) {
     //console.log(input)
     //console.log("YES IT IS HERE")
@@ -69,7 +70,7 @@ $(document).ready(function(){
               `<td class="poll">
                 <form class="add_poll">
                   <div class="form-group">
-                    <input class="yes-no form-check-input" id="box${i}" type="checkbox" value="">
+                    <input class="yes-no form-check-input" id="boxN${i}" type="checkbox" value="">
                   </div>
                 </form>`
        addUser += availableBoxes
@@ -101,18 +102,19 @@ $(document).ready(function(){
     availabilityObject.availability = []
 
      for (j = 2;j < users[0].length; j++) {
-
+      let k = j - 2
       if (users[i][j] === 1) {
-       columnItem = `<td><input class="yes-no form-check-input" type="checkbox" value="yes" checked disabled></td>`
+       columnItem = `<td><input class="yes-no form-check-input" id = ${i}_${k}_${j} type="checkbox" value="yes" checked disabled></td>`
        rowItem += columnItem
+       console.log(j);
 
       } else {
-
-        columnItem = `<td><input class="yes-no form-check-input" type="checkbox" value="no" disabled></td>`
+        console.log(j);
+        columnItem = `<td><input class="yes-no form-check-input" id = ${i}_${k}_${j}  type="checkbox" value="no" disabled></td>`
         rowItem += columnItem
       }
 
-       let k = j - 2
+
        availabilityObject.dateids.push(dates[k].id)
        availabilityObject.availability.push(users[i][j])
      }
@@ -126,7 +128,7 @@ $(document).ready(function(){
     console.log('in edit button listner');
       let editbutton = `.edit${users[i][0]}`
       let checkboxClass = $( `.${users[i][0]}`)
-
+      let changed_user_id = users[i][0];
       $(editbutton).on('click',function(event){
         event.preventDefault();
         //take the user name value
@@ -138,13 +140,15 @@ $(document).ready(function(){
 
       //save button handler
       let savebutton = `.save${users[i][0]}`
+      chengedUserID = users[i][0];
       $(savebutton).on('click',function(event){
         event.preventDefault();
+        //disable checkboxes
         checkboxClass.find('.yes-no').prop( "disabled", true );
-      })
-      //disable checkboxes
-      //samilar to submit button, call database functions to update the availability
+      //Update availabiltiyArray
+      console.log('Changed button ID in save',chengedUserID);
 
+      })
    }
 
 
@@ -224,20 +228,45 @@ $('.form-check-input').on('click', function(event){
 
 
 $( function() {
+
+
   $( document ).on( "change", ":checkbox", function () {
-    if (yesNo[this.id.slice(3,)] == 1) {
-      yesNo[this.id.slice(3,)] = 0
-    }else {
-      yesNo[this.id.slice(3,)] = 1
+    console.log(this.id.slice(3,4))
+    if (this.id.slice(3,4) == 'N') {
+    console.log("NEW USER ONE")
+      if (yesNo[this.id.slice(4,)] == 1) {
+        yesNo[this.id.slice(4,)] = 0
+      }else {
+        yesNo[this.id.slice(4,)] = 1
+      }
+    } else {
+    console.log("NON NEW USER CHECK BOX")
+    //find this user and this checkbox name
+    //uding these to update avalibility array
+    let datecolumn = this.id;
+    let user_position = this.id.split('_')[0];
+    let date_position = this.id.split('_')[1];
+    console.log('user position',user_position);
+    console.log('date',date_position);
+
+    //var availabiltiyArray = [
+//  {userid: 4000, dateids: [4000, 5000, 6000], availability: [1, 1, 1], name: 'Sir Dr. Mr. Professor Spaghetti Esq.', eventid: 2000},
+//{userid: 4000, dateids: [4000, 5000, 6000], availability: [1, 1, 1], name: 'Sir Dr. Mr. Professor Spaghetti Esq.', eventid: 2000}
+//  {dateids:[4000, 5000, 6000], availability: [0,0,0] ,name: 'N. Person', eventid: 3000}
+
+//]
+
+  if(availabiltiyArray[user_position].availability[date_position]===1){
+    vailabiltiyArray[user_position].availability[date_position]=0;
+  }else{availabiltiyArray[user_position].availability[date_position]=1}
+
+
     }
   });
+
+
 });
 
-
-
-$('#box1').prop('checked', function() {
-  console.log("FUCK")
-})
 
 addEventListeners()
 
