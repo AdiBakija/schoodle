@@ -17,6 +17,7 @@ body {
     background-color: #C0C0C0;
     padding: 6em;
     border-radius: 2em;
+    overflow: hidden;
 
     .link {
       background-color: #eee;
@@ -25,6 +26,7 @@ body {
       border-radius: 1em;
       text-align: center;
       font-size: 2em;
+      word-wrap: break-word;
 
     }
 
@@ -106,36 +108,17 @@ body {
   display:none;
 }
 
-@media screen and (max-width: 640px) {
-  header {
-
-    nav {
-      height: 1em;
-    }
-
-  }
-
-/*  .form-group {
-    width: 15em;
-  }*/
-
-}
-
 @media screen and (max-width: 767px) {
   header {
 
     nav {
-      height: 1em;
-    }
-
-    button {
-      float: left;
+      visibility: hidden;
     }
 
   }
 
-/*  .form-group {
-    width: 15em;
-  }*/
+  td {
+    overflow-wrap: break-word;
+  }
 
 }

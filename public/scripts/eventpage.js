@@ -283,10 +283,11 @@ $( function() {
 
 //]
 
-  if(availabiltiyArray[user_position].availability[date_position]===1){
-    vailabiltiyArray[user_position].availability[date_position]=0;
-  }else{availabiltiyArray[user_position].availability[date_position]=1}
-
+      if (availabiltiyArray[user_position].availability[date_position]===1) {
+        vailabiltiyArray[user_position].availability[date_position]=0;
+      } else {
+        availabiltiyArray[user_position].availability[date_position]=1;
+      }
 
     }
   });
