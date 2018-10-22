@@ -134,25 +134,29 @@ module.exports = function makeDataHelpers(knex) {
       console.log("IN ADD USERS", availabilityArray)
       for (var user of availabilityArray) {
           if (user.userid) {
-            let updatedId = await knex('users').returning('id')
-              .where('id', '=', user.userid)
-              .update('name', user.name);
-            console.log(updatedId)
-            console.log(user.dateids)
-            console.log(user.availability)
-            try {
-              for (var i =0; i < user.dateids.length; i++){
-                console.log('User Updated')
-                await knex('usersdates')
-                  .where('userid','=',updatedId[0])
-                  .andWhere('dateid',user.dateids[i])
-                  .update({
-                    available: user.availability[i]
-                  })
-                }
+            if (user.userid == 'remove'){
+              console.log('User Removed')
+            }else {
+              let updatedId = await knex('users').returning('id')
+                .where('id', '=', user.userid)
+                .update('name', user.name);
+              console.log(updatedId)
+              console.log(user.dateids)
+              console.log(user.availability)
+              try {
+                for (var i =0; i < user.dateids.length; i++){
+                  console.log('User Updated')
+                  await knex('usersdates')
+                    .where('userid','=',updatedId[0])
+                    .andWhere('dateid',user.dateids[i])
+                    .update({
+                      available: user.availability[i]
+                    })
+                  }
 
-            } catch (e) {
-              console.log(e)
+              } catch (e) {
+                console.log(e)
+              }
             }
           } else {
             let createdId = await knex('users').returning('id')
@@ -178,7 +182,56 @@ module.exports = function makeDataHelpers(knex) {
 
       }
       callback(null, "success")
+    },
+
+    addEmailUser: function(emailObject, callback) {
+      console.log('GOT TO DATABASE ----------------------')
+      knex.select('id').from('emails')
+          .where('emailtext','=',emailObject.email)
+          .then((rows)=> {
+              if(rows.length > 0) {
+                knex('eventsemails')
+                  .insert({
+                    eventid: emailObject.eventid,
+                    emailid: rows[0].id
+                  }).then(function(insertedRows){
+                    callback(null, insertedRows)
+                  })
+              } else {
+                knex('emails')
+                  .returning('id')
+                  .insert({
+                    name: emailObject.name,
+                    emailtext: emailObject.email
+                  })
+                  .then(function(rowIds){
+                    knex('eventsemails')
+                    .insert({
+                      eventid: emailObject.eventid,
+                      emailid: rowIds[0]
+                    }).then(function(insertedRows){
+                      console.log(rowIds)
+                      callback(null, insertedRows)
+                    })
+                  })
+
+                  .then(function(insertedRows) {
+                  callback(null, insertedRows[0])
+                })
+              }
+          })
+    },
+    removeUser: function(deleteuserid, callback) {
+      knex('users')
+        .where('id',deleteuserid)
+        .del()
+        .then(function(deletedid) {
+          callback(null, deletedid[0])
+        })
     }
+
+
+
   }
 }
 

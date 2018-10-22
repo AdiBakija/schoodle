@@ -10,9 +10,11 @@ $(document).ready(function(){
   var yesNo = []
 
 
+
+
   function useTable (input) {
-    //console.log(input)
-    //console.log("YES IT IS HERE")
+
+
     eventObj = input
     dates = eventObj.dates
     users = eventObj.availableArray
@@ -68,7 +70,9 @@ $(document).ready(function(){
               `<td class="poll">
                 <form class="add_poll">
                   <div class="form-group">
-                    <input class="yes-no form-check-input" id="box${i}" type="checkbox" value="">
+
+                    <input class="yes-no form-check-input" id="boxN${i}" type="checkbox" value="">
+
                   </div>
                 </form>`
        addUser += availableBoxes
@@ -81,12 +85,17 @@ $(document).ready(function(){
   for (i = 0; i < users.length; i++) {
     rowItem =`<tr class="${users[i][0]}">
                 <td class="name col1">
-                  <button class="delete btn btn-danger btn-xs" type="button">
+
+                  <button class="delete${users[i][0]} btn btn-danger btn-xs" type="button">
+
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                   </button>
                   <button class="edit${users[i][0]} btn btn-info btn-xs" type="button">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                  </button>${users[i][1]}
+                  </button>
+                  <button class="save${users[i][0]} btn btn-info btn-xs" type="button">
+                    <span aria-hidden="true">Save</span>
+                  </button>    ${users[i][1]}
                 </td>`
 
     availabilityObject = {}
@@ -98,25 +107,84 @@ $(document).ready(function(){
 
      for (j = 2;j < users[0].length; j++) {
 
+      let k = j - 2
       if (users[i][j] === 1) {
-       columnItem = `<td><input class="yes-no form-check-input" type="checkbox" value="yes" checked disabled></td>`
+       columnItem = `<td><input class="yes-no form-check-input" id = ${i}_${k}_${j} type="checkbox" value="yes" checked disabled></td>`
        rowItem += columnItem
 
       } else {
-
-        columnItem = `<td><input class="yes-no form-check-input" type="checkbox" value="no" disabled></td>`
+        columnItem = `<td><input class="yes-no form-check-input" id = ${i}_${k}_${j}  type="checkbox" value="no" disabled></td>`
         rowItem += columnItem
       }
 
-       let k = j - 2
        availabilityObject.dateids.push(dates[k].id)
        availabilityObject.availability.push(users[i][j])
      }
      rowItem += `</tr>`
      userRows += rowItem
      availabiltiyArray.push(availabilityObject)
+
+  }
+  $('.table-body').append(userRows)
+
+    for (i = 0; i < users.length; i++) {
+    let editbutton = `.edit${users[i][0]}`
+    let checkboxClass = $( `.${users[i][0]}`)
+      $(editbutton).on('click',function(event){
+        event.preventDefault();
+        //take the user name value
+        $(checkboxClass).find('.yes-no').prop( "disabled", false );
+        //enable the checkboxes
+      })
+    }
+
+   for (i = 0; i < users.length; i++) {
+      let editbutton = `.edit${users[i][0]}`
+      let checkboxClass = $( `.${users[i][0]}`)
+      let changed_user_id = users[i][0];
+      $(editbutton).on('click',function(event){
+        event.preventDefault();
+        //take the user name value
+        checkboxClass.find('.yes-no').prop( "disabled", false );
+        //enable the checkboxes
+      })
+
+      //save button handler
+      let savebutton = `.save${users[i][0]}`
+
+      $(savebutton).on('click',function(event){
+        event.preventDefault();
+        //disable checkboxes
+        checkboxClass.find('.yes-no').prop( "disabled", true );
+      //Update availabiltiyArray
+
+      })
+
+      //Delete Button
+      //empty the class with userid
+      let deletebutton = `.delete${users[i][0]}`;
+      let deletuserid = users[i][0];
+      let deleteUserArrayLocation = i
+      $(deletebutton).on('click',function(event){
+        event.preventDefault();
+        $(`.${deletuserid}`).css('display','none');
+
+        availabiltiyArray[i] = {}
+        availabiltiyArray[i].userid = 'remove'
+        let deleteToDatabase = {deletuserid: deletuserid}
+        $.ajax({
+          url: '/api/users/removeuser',
+          method: 'POST',
+          data: deleteToDatabase
+        })
+
+
+      })
+
    }
-   $('.table-body').append(userRows)
+
+
+
 
 //var availabiltiyArray = [
 //  {userid: 4000, dateids: [4000, 5000, 6000], availability: [1, 1, 1], name: 'Sir Dr. Mr. Professor Spaghetti Esq.', eventid: 2000},
@@ -139,6 +207,7 @@ $(document).ready(function(){
   }
 
 function addEventListeners() {
+
   $('#buttonforadding').on('click', function(event){
     event.preventDefault();
 
@@ -151,9 +220,26 @@ function addEventListeners() {
 
       newParticipant.availability = yesNo
       availabiltiyArray.push(newParticipant)
+      newParticipant = {eventid: eventObj.eventid, dateids: [], availability: []};
     }
 
     let availabilityToDatabase = {avArray: availabiltiyArray}
+
+    emailObj = {
+      name: $('.email-name').val(),
+      email: $('.email-email').val(),
+      eventid: eventObj.eventid
+    }
+    console.log(emailObj)
+    emailToDatabase = {emailObj: emailObj}
+    console.log('GOT TO THE AJAX REQUEST -----------------')
+    $.ajax({
+        url: '/api/users/addemail',
+        type: 'POST',
+        dataType: 'JSON',
+        data:emailToDatabase
+    })
+
 
     $.ajax({
         url: '/api/users/loadEvent',
@@ -162,14 +248,13 @@ function addEventListeners() {
         data: availabilityToDatabase
     }).then(getEvent())
 
-    function happy() {
+    window.location.reload();
 
-    }
+
   })
 //for loop to add event listener on edit button
 
 }
-
 
 
   function getEvent () {
@@ -200,17 +285,42 @@ $('.form-check-input').on('click', function(event){
 
 
 $( function() {
+
+
   $( document ).on( "change", ":checkbox", function () {
-    if (yesNo[this.id.slice(3,)] == 1) {
-      yesNo[this.id.slice(3,)] = 0
-    }else {
-      yesNo[this.id.slice(3,)] = 1
+    if (this.id.slice(3,4) == 'N') {
+      if (yesNo[this.id.slice(4,)] == 1) {
+        yesNo[this.id.slice(4,)] = 0
+      }else {
+        yesNo[this.id.slice(4,)] = 1
+      }
+    } else {
+    //find this user and this checkbox name
+    //uding these to update avalibility array
+    let datecolumn = this.id;
+    let user_position = this.id.split('_')[0];
+    let date_position = this.id.split('_')[1];
+
+    //var availabiltiyArray = [
+//  {userid: 4000, dateids: [4000, 5000, 6000], availability: [1, 1, 1], name: 'Sir Dr. Mr. Professor Spaghetti Esq.', eventid: 2000},
+//{userid: 4000, dateids: [4000, 5000, 6000], availability: [1, 1, 1], name: 'Sir Dr. Mr. Professor Spaghetti Esq.', eventid: 2000}
+//  {dateids:[4000, 5000, 6000], availability: [0,0,0] ,name: 'N. Person', eventid: 3000}
+
+//]
+
+      if (availabiltiyArray[user_position].availability[date_position]===1) {
+        vailabiltiyArray[user_position].availability[date_position]=0;
+      } else {
+        availabiltiyArray[user_position].availability[date_position]=1;
+      }
+
     }
   });
+
 });
 
-
 addEventListeners()
+
 
 
 

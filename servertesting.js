@@ -17,8 +17,9 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
-const dbaccess = require("./util/dbaccess")(knex, dataHelpers);
 const dataHelpers = require("./util/data-helpers")(knex);
+const dbaccess = require("./util/dbaccess")(knex, dataHelpers);
+
 
 var url = '1234567'
 
@@ -68,6 +69,16 @@ dataHelpers.getEventId(url, (err, eventIdResult) => {
 //  }
 //  return result
 //})
+var emailObj = {
+  eventid: 1000,
+  name: 'WAAAAAAASUp',
+  email: 'me@cool.com'
+}
+
+dataHelpers.addEmailUser(emailObj, function(err, result100){
+  console.log(result100)
+})
+
 
 
 var eventObj = {
@@ -80,9 +91,9 @@ var eventObj = {
   event_dates_user_input: [{startDateTime: '2020/04/20 16:20', endDateTime: '2020/04/20 16:40'}, {startDateTime: '2020/04/20 4:20', endDateTime: '2020/04/20 4:45'}]
   }
 
-dbAccess.urlToTableRender('1234567', function(err, result) {
-  console.log(result)
-})
+//dbAccess.urlToTableRender('1234567', function(err, result) {
+//  console.log(result)
+//})
 
 //dataHelpers.addEmail(eventObj, function (err, result) {
 //  if (err) {

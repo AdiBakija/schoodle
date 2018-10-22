@@ -15,8 +15,9 @@ body {
 
   main {
     background-color: #C0C0C0;
-    padding: 2em;
+    padding: 6em;
     border-radius: 2em;
+    overflow: hidden;
 
     .link {
       background-color: #eee;
@@ -25,6 +26,7 @@ body {
       border-radius: 1em;
       text-align: center;
       font-size: 2em;
+      word-wrap: break-word;
 
     }
 
@@ -71,6 +73,10 @@ body {
 
     }
 
+    .email-notifications {
+      font-weight: bold;
+    }
+
     .start_end_container {
       padding-bottom: 1em;
     }
@@ -102,36 +108,17 @@ body {
   display:none;
 }
 
-@media screen and (max-width: 640px) {
-  header {
-
-    nav {
-      height: 1em;
-    }
-
-  }
-
-/*  .form-group {
-    width: 15em;
-  }*/
-
-}
-
 @media screen and (max-width: 767px) {
   header {
 
     nav {
-      height: 1em;
-    }
-
-    button {
-      float: left;
+      visibility: hidden;
     }
 
   }
 
-/*  .form-group {
-    width: 15em;
-  }*/
+  td {
+    overflow-wrap: break-word;
+  }
 
 }
