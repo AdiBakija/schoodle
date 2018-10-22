@@ -67,7 +67,7 @@ router.get('/new/:shorturl', (req,res)=>{
 })
 
 router.put('/loadEvent', (req,res)=> {
-  //console.log("REQUEST.BODY", req.body)
+  console.log("REQUEST.BODY", req.body)
 
   dbAccess.urlToTableRender(req.body.short, (err,event)=> {
     if (err) {
@@ -90,6 +90,24 @@ router.post('/loadEvent', (req,res)=> {
   })
 
 })
+
+
+// function resolveAfter2Seconds() {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve('resolved');
+//     }, 2000);
+//   });
+// }
+
+// async function asyncCall() {
+//   console.log('calling');
+//   var result = await resolveAfter2Seconds();
+//   console.log(result);
+//   // expected output: 'resolved'
+// }
+
+// asyncCall();
 
 function generateRandomShortUrl(){
   return Math.random().toString(36).replace('0.','').slice(0,8);

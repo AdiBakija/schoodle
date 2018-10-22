@@ -121,8 +121,22 @@ $(document).ready(function(){
      rowItem += `</tr>`
      userRows += rowItem
      availabiltiyArray.push(availabilityObject)
-   }
-   $('.table-body').append(userRows)
+  }
+  $('.table-body').append(userRows)
+
+    for (i = 0; i < users.length; i++) {
+    console.log('in edit button listner');
+    let editbutton = `.edit${users[i][0]}`
+    let checkboxClass = $( `.${users[i][0]}`)
+      $(editbutton).on('click',function(event){
+        event.preventDefault();
+        //take the user name value
+        console.log(checkboxClass);
+        console.log($(checkboxClass).find('.yes-no'));
+        $(checkboxClass).find('.yes-no').prop( "disabled", false );
+        //enable the checkboxes
+      })
+    }
 
    for (i = 0; i < users.length; i++) {
     console.log('in edit button listner');
@@ -164,7 +178,7 @@ function addEventListeners() {
 
 
 
-
+//The bug could potentially be within this block of code
   $('#buttonforadding').on('click', function(event){
     event.preventDefault();
 
@@ -177,6 +191,7 @@ function addEventListeners() {
 
       newParticipant.availability = yesNo
       availabiltiyArray.push(newParticipant)
+      newParticipant = {eventid: eventObj.eventid, dateids: [], availability: []};
     }
 
     let availabilityToDatabase = {avArray: availabiltiyArray}
@@ -187,7 +202,7 @@ function addEventListeners() {
         dataType: "JSON",
         data: availabilityToDatabase
     }).then(getEvent())
-
+    window.location.reload();
     function happy() {
       console.log("Happy")
     }
