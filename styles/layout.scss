@@ -15,7 +15,7 @@ body {
 
   main {
     background-color: #C0C0C0;
-    padding: 2em;
+    padding: 6em;
     border-radius: 2em;
 
     .link {
@@ -69,6 +69,10 @@ body {
         width: 20em;
       }
 
+    }
+
+    .email-notifications {
+      font-weight: bold;
     }
 
     .start_end_container {
