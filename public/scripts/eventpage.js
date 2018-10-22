@@ -12,8 +12,7 @@ $(document).ready(function(){
 
 
   function useTable (input) {
-    //console.log(input)
-    //console.log("YES IT IS HERE")
+
     eventObj = input
     dates = eventObj.dates
     users = eventObj.availableArray
@@ -28,8 +27,6 @@ $(document).ready(function(){
 
       for (i = 0; i < dates.length; i++) {
     /*EDIT DATE FORMAT */
-        console.log(dates[i].datetime);
-        console.log(dates[i].enddatetime);
         let start = new Date(dates[i].datetime);
         let end = new Date(dates[i].enddatetime);
         let start_weekDay = start.toString().slice(0,3);
@@ -106,10 +103,8 @@ $(document).ready(function(){
       if (users[i][j] === 1) {
        columnItem = `<td><input class="yes-no form-check-input" id = ${i}_${k}_${j} type="checkbox" value="yes" checked disabled></td>`
        rowItem += columnItem
-       console.log(j);
 
       } else {
-        console.log(j);
         columnItem = `<td><input class="yes-no form-check-input" id = ${i}_${k}_${j}  type="checkbox" value="no" disabled></td>`
         rowItem += columnItem
       }
@@ -125,29 +120,23 @@ $(document).ready(function(){
   $('.table-body').append(userRows)
 
     for (i = 0; i < users.length; i++) {
-    console.log('in edit button listner');
     let editbutton = `.edit${users[i][0]}`
     let checkboxClass = $( `.${users[i][0]}`)
       $(editbutton).on('click',function(event){
         event.preventDefault();
         //take the user name value
-        console.log(checkboxClass);
-        console.log($(checkboxClass).find('.yes-no'));
         $(checkboxClass).find('.yes-no').prop( "disabled", false );
         //enable the checkboxes
       })
     }
 
    for (i = 0; i < users.length; i++) {
-    console.log('in edit button listner');
       let editbutton = `.edit${users[i][0]}`
       let checkboxClass = $( `.${users[i][0]}`)
       let changed_user_id = users[i][0];
       $(editbutton).on('click',function(event){
         event.preventDefault();
         //take the user name value
-        console.log(checkboxClass);
-        console.log($(checkboxClass).find('.yes-no'));
         checkboxClass.find('.yes-no').prop( "disabled", false );
         //enable the checkboxes
       })
@@ -160,7 +149,6 @@ $(document).ready(function(){
         //disable checkboxes
         checkboxClass.find('.yes-no').prop( "disabled", true );
       //Update availabiltiyArray
-      console.log('Changed button ID in save',chengedUserID);
 
       })
 
@@ -168,9 +156,21 @@ $(document).ready(function(){
       //empty the class with userid
       let deletebutton = `.delete${users[i][0]}`;
       let deletuserid = users[i][0];
+      let deleteUserArrayLocation = i
       $(deletebutton).on('click',function(event){
         event.preventDefault();
         $(`.${deletuserid}`).css('display','none');
+
+        availabiltiyArray[i] = {}
+        availabiltiyArray[i].userid = 'remove'
+        let deleteToDatabase = {deletuserid: deletuserid}
+        $.ajax({
+          url: '/api/users/removeuser',
+          method: 'POST',
+          data: deleteToDatabase
+        })
+
+
       })
 
    }
@@ -208,12 +208,12 @@ function addEventListeners() {
 
     emailObj = {
       name: $('.email-name').val(),
-      email: $('email-email').val(),
+      email: $('.email-email').val(),
       eventid: eventObj.eventid
     }
-
+    console.log(emailObj)
     emailToDatabase = {emailObj: emailObj}
-
+    console.log('GOT TO THE AJAX REQUEST -----------------')
     $.ajax({
         url: '/api/users/addemail',
         type: 'POST',
@@ -236,15 +236,12 @@ function addEventListeners() {
 
 
   function getEvent () {
-    console.log("inside getEvent")
     $.ajax({
         url: '/api/users/loadEvent',
         type: 'PUT',
         dataType: "JSON",
         data: urlToPass
     }).done(function(data,status,response){
-      console.log('in done function')
-      console.log(data);
       useTable(data);
     })
   }
@@ -260,7 +257,6 @@ function addEventListeners() {
 
 $('.form-check-input').on('click', function(event){
     event.preventDefault()
-    console.log("WORKING")
   })
 
 
@@ -268,23 +264,18 @@ $( function() {
 
 
   $( document ).on( "change", ":checkbox", function () {
-    console.log(this.id.slice(3,4))
     if (this.id.slice(3,4) == 'N') {
-    console.log("NEW USER ONE")
       if (yesNo[this.id.slice(4,)] == 1) {
         yesNo[this.id.slice(4,)] = 0
       }else {
         yesNo[this.id.slice(4,)] = 1
       }
     } else {
-    console.log("NON NEW USER CHECK BOX")
     //find this user and this checkbox name
     //uding these to update avalibility array
     let datecolumn = this.id;
     let user_position = this.id.split('_')[0];
     let date_position = this.id.split('_')[1];
-    console.log('user position',user_position);
-    console.log('date',date_position);
 
     //var availabiltiyArray = [
 //  {userid: 4000, dateids: [4000, 5000, 6000], availability: [1, 1, 1], name: 'Sir Dr. Mr. Professor Spaghetti Esq.', eventid: 2000},
