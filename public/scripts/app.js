@@ -67,6 +67,8 @@ $(document).ready(function(){
   // })
 
 // submit event info
+var number_of_input_dates=[];
+var datenumber = 0;
   $event_info.on('submit',function(event){
     event.preventDefault();
     event_info_user_input_desc = $(event.target).find('.event-desc').val();
@@ -77,28 +79,72 @@ $(document).ready(function(){
     }).done(function(data,status,response){
       $event_info.css('display','none');
       $event_date.css('display','block');
+
+
+      datenumber+=1;
+      number_of_input_dates.push(datenumber);
+    $('.deleteDateButton1').on('click',function(event){
+    //empty container start_end1
+    $(`.start_end1`).empty();
+
+    let index = number_of_input_dates.indexOf(datenumber);
+    number_of_input_dates.splice(index,1);
+    console.log('after delete the original one',number_of_input_dates);
+  })
     })
   })
 
 
 
 //add date button
-var number_of_input_dates=1;
+
 $('.add-date').on('click',function(event){
   event.preventDefault();
-  number_of_input_dates+=1;
+  datenumber+=1;
+  number_of_input_dates.push(datenumber);
   let new_date_input = $('.start_end1').clone();
   new_date_input.removeClass('start_end1');
-  new_date_input.addClass(`start_end${number_of_input_dates}`);
+  new_date_input.addClass(`start_end${datenumber}`);
+  let deletbutton = new_date_input.find('.deleteDateButton1');
+  deletbutton.removeClass('deleteDateButton1');
+  // deletbutton.addClass(`deleteDateButton${datenumber}`);
+deletbutton.attr('id', `deleteDateButton${datenumber}`);
   $('.start_end_container').append(new_date_input);
+  //delete button listener
+
+
+
+
+
+    $(`#deleteDateButton${datenumber}`).on('click',function(event){
+      console.log('id of this button get clicked',this.id);
+      //empty container start_end1
+      console.log('deletbutton clicked','button:',`.deleteDateButton${datenumber}`);
+      console.log('container name',`.start_end${datenumber}`);
+      //find this button's name
+      let stringlength = this.id.length;
+      let buttonNumber = this.id.slice(stringlength-1,stringlength);
+      console.log('buttonid',buttonNumber);
+      $(`.start_end${buttonNumber}`).empty();
+      let index = number_of_input_dates.indexOf(buttonNumber);
+      // number_of_input_dates.splice(index,1);
+      datenumber = datenumber-1;
+      console.log('numbber of dates',datenumber);
+    })
+
+
 });
+
+
+
+
 let date;
 //submit button on dates
 $('.event_date').on('submit',function(event){
   event.preventDefault();
 
-  for(i=1;i<=number_of_input_dates;i++){
-
+  for(i=1;i<=datenumber;i++){
+    console.log('inside for look',datenumber,$( `.start_end${i}`).find('.starttime').val());
     date = {starttime:$( `.start_end${i}`).find('.starttime').val().toString(),
     endtime:$( `.start_end${i}`).find('.endtime').val().toString()};
     console.log("THIS IS THE DATE AFTER THE JQUERY", date)
