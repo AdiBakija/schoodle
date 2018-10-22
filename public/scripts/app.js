@@ -42,19 +42,22 @@ $(document).ready(function(){
     event_title_user_input = $('.event-title').val();                      ///////change the name according to Adi's id of index form textarea
     let user_input_length = event_title_user_input.length;
     //check input
-    if(user_input_length==0){alert('Empty Event name input!')}
+    if(user_input_length==0){
+      alert('Empty Event name input!')
+    } else {
     //send response with user input as data
     //empty div
     //append #event_info
-    $.ajax({
-      url:'/api/users/new',
-      type:'post'
-    }).done(function(){
-      $event_title.css('display','none');
-      $event_info.css('display','block');
+      $.ajax({
+        url:'/api/users/new',
+        type:'post'
+      }).done(function(){
+        $event_title.css('display','none');
+        $event_info.css('display','block');
 
 
-    })
+      })
+    }
   });
 
 
@@ -154,7 +157,14 @@ $('.event_date').on('submit',function(event){
 // })
 
 
-
+$('.navbar-btn').on('click', function(event){
+  if($('.event_title').length > 0){
+  window.location.reload()
+  } else {
+    console.log('hooray')
+    window.location.replace('http://localhost:8080/')
+  }
+})
 
 
 
@@ -163,23 +173,28 @@ $event_creator.on('submit',function(){
   event.preventDefault();
   event_creator_name = $(event.target).find('.event-creator-name').val();
   event_creator_email = $(event.target).find('.event-creator-email').val();
-  $.ajax({
-    url:'api/users/new/creator',
-    type:'post',
-    data:{event_title_user_input:event_title_user_input,
-      event_info_user_input_desc:event_info_user_input_desc,
-      event_info_user_input_loc:event_info_user_input_loc,
-      event_dates_user_input:event_dates_user_input,
-      event_creator_name:event_creator_name,
-      event_creator_email:event_creator_email}
-  }).done(function(data,status,response){
-    //got response from server
-    //send get request to /api/users/shorturl
-    // here data = shorturl
-    window.location = 'api/users/new/'+data;
-  }).done(function(data,status,respons){
 
-  })
+  if ($(event.target).find('.event-creator-name').val().length == 0 || $(event.target).find('.event-creator-email').val().length == 0){
+    alert("Creator Name and Email Required")
+  } else {
+    $.ajax({
+      url:'api/users/new/creator',
+      type:'post',
+      data:{event_title_user_input:event_title_user_input,
+        event_info_user_input_desc:event_info_user_input_desc,
+        event_info_user_input_loc:event_info_user_input_loc,
+        event_dates_user_input:event_dates_user_input,
+        event_creator_name:event_creator_name,
+        event_creator_email:event_creator_email}
+    }).done(function(data,status,response){
+      //got response from server
+      //send get request to /api/users/shorturl
+      // here data = shorturl
+      window.location = 'api/users/new/'+data;
+    }).done(function(data,status,respons){
+
+    })
+  }
 })
 //send everything to server side, store into database, create shorurl, redirect to shorturl,
 

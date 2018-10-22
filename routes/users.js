@@ -91,6 +91,14 @@ router.post('/loadEvent', (req,res)=> {
 
 })
 
+router.post('/api/users/addemail', (req,res)=> {
+  dataHelpers.addEmailUser(emailObj, function(err, result100){
+    console.log(result100)
+  })
+  res.status(201).send(result100)
+})
+
+
 function generateRandomShortUrl(){
   return Math.random().toString(36).replace('0.','').slice(0,8);
 }

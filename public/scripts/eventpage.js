@@ -177,12 +177,32 @@ function addEventListeners() {
 
     let availabilityToDatabase = {avArray: availabiltiyArray}
 
+    emailObj = {
+      name: $('.email-name').val(),
+      email: $('email-email').val(),
+      eventid: eventObj.eventid
+    }
+
+    emailToDatabase = {emailObj: emailObj}
+
+    $.ajax({
+        url: '/api/users/addemail',
+        type: 'POST',
+        dataType: 'JSON',
+        data:emailToDatabase
+    })
+
+
     $.ajax({
         url: '/api/users/loadEvent',
         type: 'POST',
         dataType: "JSON",
         data: availabilityToDatabase
     }).then(getEvent())
+    window.location.reload()
+    availabilityToDatabase = {}
+
+
 
     function happy() {
       console.log("Happy")
