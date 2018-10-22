@@ -178,6 +178,42 @@ module.exports = function makeDataHelpers(knex) {
 
       }
       callback(null, "success")
+    },
+
+    addEmailUser: function(emailObject, callback) {
+      knex.select('id').from('emails')
+          .where('emailtext','=',emailObject.email)
+          .then((rows)=> {
+              if(rows.length > 0) {
+                knex('eventsemails')
+                  .insert({
+                    eventid: emailObject.eventid,
+                    emailid: rows[0]
+                  }).then(function(insertedRows){
+                    callback(null, insertedRows)
+                  })
+              } else {
+                knex('emails')
+                  .returning('id')
+                  .insert({
+                    name: emailObject.name,
+                    emailtext: emailObject.email
+                  })
+                  .then(function(rowIds){
+                    knex('eventsemails')
+                    .insert({
+                      eventid: emailObject.eventid,
+                      emailid: rowIds[0]
+                    }).then(function(insertedRows){
+                      callback(null, insertedRows)
+                    })
+                  })
+
+                  .then(function(insertedRows) {
+                  callback(null, insertedRows[0])
+                })
+              }
+          })
     }
   }
 }

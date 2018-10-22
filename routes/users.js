@@ -92,22 +92,13 @@ router.post('/loadEvent', (req,res)=> {
 })
 
 
-// function resolveAfter2Seconds() {
-//   return new Promise(resolve => {
-//     setTimeout(() => {
-//       resolve('resolved');
-//     }, 2000);
-//   });
-// }
+router.post('/api/users/addemail', (req,res)=> {
+  dataHelpers.addEmailUser(emailObj, function(err, result100){
+    console.log(result100)
+  })
+  res.status(201).send(result100)
+})
 
-// async function asyncCall() {
-//   console.log('calling');
-//   var result = await resolveAfter2Seconds();
-//   console.log(result);
-//   // expected output: 'resolved'
-// }
-
-// asyncCall();
 
 function generateRandomShortUrl(){
   return Math.random().toString(36).replace('0.','').slice(0,8);
