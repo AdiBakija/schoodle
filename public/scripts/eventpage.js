@@ -83,7 +83,7 @@ $(document).ready(function(){
   for (i = 0; i < users.length; i++) {
     rowItem =`<tr class="${users[i][0]}">
                 <td class="name col1">
-                  <button class="delete btn btn-danger btn-xs" type="button">
+                  <button class="delete${users[i][0]} btn btn-danger btn-xs" type="button">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                   </button>
                   <button class="edit${users[i][0]} btn btn-info btn-xs" type="button">
@@ -154,7 +154,7 @@ $(document).ready(function(){
 
       //save button handler
       let savebutton = `.save${users[i][0]}`
-      chengedUserID = users[i][0];
+
       $(savebutton).on('click',function(event){
         event.preventDefault();
         //disable checkboxes
@@ -163,6 +163,16 @@ $(document).ready(function(){
       console.log('Changed button ID in save',chengedUserID);
 
       })
+
+      //Delete Button
+      //empty the class with userid
+      let deletebutton = `.delete${users[i][0]}`;
+      let deletuserid = users[i][0];
+      $(deletebutton).on('click',function(event){
+        event.preventDefault();
+        $(`.${deletuserid}`).css('display','none');
+      })
+
    }
 
 
